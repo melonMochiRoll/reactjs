@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   mode: 'development',
@@ -29,7 +30,18 @@ module.exports = {
           }
         }
       }
-
     ]
-  }
+  },
+  devServer: {
+    static: {
+      directory: path.join(__dirname),
+    },
+    devMiddleware: { publicPath: '/dist/'},
+    historyApiFallback: true,
+    compress: true,
+    port: 3006,
+  },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+  ]
 };

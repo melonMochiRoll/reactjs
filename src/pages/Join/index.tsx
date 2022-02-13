@@ -23,7 +23,7 @@ const Join = () => {
         })
         .catch((error) => {
           console.dir(error);
-          // error logic
+          //error logic
         });
     },
     [email, nickname, password]);

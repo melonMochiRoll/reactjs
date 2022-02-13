@@ -29,6 +29,10 @@ module.exports = {
             ]
           }
         }
+      },
+      {
+        test: /\.css/,
+        type: 'asset/resource'
       }
     ]
   },

@@ -5,7 +5,14 @@ module.exports = {
   mode: 'development',
   devtool: 'inline-source-map',
   resolve: {
-    extensions: [ '.js', '.jsx', '.ts', '.tsx', '.json'],
+    extensions: [
+      '.js',
+      '.jsx',
+      '.ts',
+      '.tsx',
+      '.json',
+      '.css'
+    ],
   },
   entry: {
     app: './src/main',
@@ -31,9 +38,9 @@ module.exports = {
         }
       },
       {
-        test: /\.css/,
-        type: 'asset/resource'
-      }
+        test: /\.css$/,
+        use: [ 'style-loader', 'css-loader' ],
+      },
     ]
   },
   devServer: {

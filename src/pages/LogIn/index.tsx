@@ -11,7 +11,6 @@ import { Button, Container, Input } from '../../styles/common';
 
 const LogIn = () => {
   const [logInSuccess, setLogInSuccess] = useState(false);
-  const [logInError, setLogInError] = useState(false);
   const [email, onChangeEmail] = useInput('');
   const [password, onChangePassword] = useInput('');
 
@@ -33,19 +32,14 @@ const LogIn = () => {
         .then(() => {
           setLogInSuccess(true);
         })
-        .catch((error) => {
-          setLogInError(error.response.data?.statusCode === 401);
+        .catch(() => {
+          toast.error(`${LOGIN_ERROR}`, TOASTIFY_BASIC_OPTION);
         });
     },
     [email, password]);
 
   if (logInSuccess) {
     <Navigate to={'/'}/>
-  }
-
-  if (logInError) {
-    toast.error(`${LOGIN_ERROR}`, TOASTIFY_BASIC_OPTION);
-    setLogInError(false);
   }
 
   return (

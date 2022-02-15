@@ -14,6 +14,7 @@ module.exports = {
       '.css'
     ],
     alias: {
+      'Src': path.resolve(__dirname, 'src'),
       'Constants': path.resolve(__dirname, 'src/constants'),
       'Hooks': path.resolve(__dirname, 'src/hooks'),
       'Pages': path.resolve(__dirname, 'src/pages'),

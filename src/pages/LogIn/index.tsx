@@ -4,10 +4,10 @@ import { useState } from "react"
 import { Link, Navigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { TOASTIFY_BASIC_OPTION } from '../../constants/react.toastify.options';
-import { EMAIL_EMPTY, LOGIN_ERROR, PASSWORD_EMPTY } from '../../constants/user.response';
-import useInput from '../../hooks/useInput';
-import { Button, Container, Input } from '../../styles/common';
+import { TOASTIFY_BASIC_OPTION } from '@Constants/react.toastify.options';
+import { EMAIL_EMPTY, LOGIN_ERROR, PASSWORD_EMPTY } from '@Constants/user.response';
+import useInput from '@Hooks/useInput';
+import { Button, Container, Form, Input } from '@Styles/common';
 
 const LogIn = () => {
   const [logInSuccess, setLogInSuccess] = useState(false);
@@ -44,7 +44,7 @@ const LogIn = () => {
 
   return (
   <Container>
-    <form onSubmit={onSubmit}>
+    <Form onSubmit={onSubmit}>
       <label id="email_label">
         <Input type="email" id="email" name="email" value={email} onChange={onChangeEmail} placeholder={'EMAIL'} />
       </label>
@@ -53,11 +53,11 @@ const LogIn = () => {
         <Input type="password" id="password" name="password" value={password} onChange={onChangePassword} placeholder={'PASSWORD'} />
       </label>
       <br/>
-      <Button type='submit'>LOGIN</Button>
+      <Button type='submit'>로그인</Button>
       <Link to={'/join'}>
-        <Button>JOIN</Button>
+        <Button>회원가입</Button>
       </Link>
-    </form>
+    </Form>
     <ToastContainer />
   </Container>
   )

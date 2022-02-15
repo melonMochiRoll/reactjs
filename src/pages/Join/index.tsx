@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React, { useCallback, useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
-import useInput from '../../hooks/useInput';
-import { Button, Container, Input } from '../../styles/common';
+import useInput from '@Hooks/useInput';
+import { Button, Container, Input, Form } from '@Styles/common';
 
 const Join = () => {
   const [joinSuccess, setJoinSuccess] = useState(false);
@@ -34,7 +34,7 @@ const Join = () => {
 
   return (
     <Container>
-      <form onSubmit={onSubmit}>
+      <Form onSubmit={onSubmit}>
         <label id="email_label">
           <Input type="email" id="email" name="email" value={email} onChange={onChangeEmail} placeholder={'EMAIL'} />
         </label>
@@ -51,11 +51,11 @@ const Join = () => {
           <Input type="passwordCheck" id="passwordCheck" name="passwordCheck" value={passwordCheck} onChange={onChangePasswordCheck} placeholder={'PASSWORD CHECK'} />
         </label>
         <br/>
-        <Button type='submit'>SUBMIT</Button>
+        <Button type='submit'>회원가입</Button>
         <Link to={'/login'}>
-          <Button>BACK</Button>
+          <Button>뒤로</Button>
         </Link>
-      </form>
+      </Form>
     </Container>
   )
 }

@@ -13,6 +13,13 @@ module.exports = {
       '.json',
       '.css'
     ],
+    alias: {
+      'Constants': path.resolve(__dirname, 'src/constants'),
+      'Hooks': path.resolve(__dirname, 'src/hooks'),
+      'Pages': path.resolve(__dirname, 'src/pages'),
+      'Styles': path.resolve(__dirname, 'src/styles'),
+      'Typings': path.resolve(__dirname, 'src/typings'),
+    },
   },
   entry: {
     app: './src/main',

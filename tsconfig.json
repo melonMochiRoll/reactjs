@@ -10,5 +10,15 @@
     "moduleResolution": "node",
     "esModuleInterop" : true,
     "allowSyntheticDefaultImports" : true,
+    "baseUrl": ".",
+    "paths": {
+      "Src/*": ["src/*"],
+      "Constants/*": ["src/constants/*"],
+      "Hooks/*": ["src/hooks/*"],
+      "Pages/*": ["src/pages/*"],
+      "Styles/*": ["src/styles/*"],
+      "Typings/*": ["src/typings/*"]
+    },
+    "typeRoots": ["@typings"],
   }
 }

@@ -5,6 +5,7 @@ import useInput from '@Hooks/useInput';
 import { Button, Container, Input, Form } from '@Styles/common';
 import { toast, ToastContainer } from 'react-toastify';
 import { TOASTIFY_BASIC_OPTION } from '@Src/constants/react.toastify.options';
+import { JOIN_SUCCESS } from '@Src/constants/user.response';
 
 const Join = () => {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ const Join = () => {
         { withCredentials: true })
         .then(() => {
           navigate(`/login`);
-          toast.success(`회원가입이 완료 되었습니다.`, TOASTIFY_BASIC_OPTION);
+          toast.success(JOIN_SUCCESS, TOASTIFY_BASIC_OPTION);
         })
         .catch((error) => {
           console.dir(error);

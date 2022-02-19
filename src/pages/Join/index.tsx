@@ -1,11 +1,13 @@
 import axios from 'axios';
-import React, { useCallback, useState } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import React, { useCallback } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import useInput from '@Hooks/useInput';
 import { Button, Container, Input, Form } from '@Styles/common';
+import { toast, ToastContainer } from 'react-toastify';
+import { TOASTIFY_BASIC_OPTION } from '@Src/constants/react.toastify.options';
 
 const Join = () => {
-  const [joinSuccess, setJoinSuccess] = useState(false);
+  const navigate = useNavigate();
   const [email, onChangeEmail] = useInput('');
   const [nickname, onChangeNickname] = useInput('');
   const [password, onChangePassword] = useInput('');
@@ -19,7 +21,8 @@ const Join = () => {
         { email, nickname, password }, 
         { withCredentials: true })
         .then(() => {
-          setJoinSuccess(true);
+          navigate(`/login`);
+          toast.success(`회원가입이 완료 되었습니다.`, TOASTIFY_BASIC_OPTION);
         })
         .catch((error) => {
           console.dir(error);
@@ -27,10 +30,6 @@ const Join = () => {
         });
     },
     [email, nickname, password]);
-
-  if (joinSuccess) {
-    <Navigate to={'/login'}/>
-  }
 
   return (
     <Container>
@@ -56,6 +55,7 @@ const Join = () => {
           <Button>뒤로</Button>
         </Link>
       </Form>
+      <ToastContainer />
     </Container>
   )
 }

@@ -48,14 +48,12 @@ const LogIn = () => {
       <label id="email_label">
         <Input type="email" id="email" name="email" value={email} onChange={onChangeEmail} placeholder={'EMAIL'} />
       </label>
-      <br/>
       <label id="password_label">
         <Input type="password" id="password" name="password" value={password} onChange={onChangePassword} placeholder={'PASSWORD'} />
       </label>
-      <br/>
-      <Button type='submit'>로그인</Button>
+      <Button long type='submit'>로그인</Button>
       <Link to={'/join'}>
-        <Button>회원가입</Button>
+        <Button long>회원가입</Button>
       </Link>
     </Form>
     <ToastContainer />

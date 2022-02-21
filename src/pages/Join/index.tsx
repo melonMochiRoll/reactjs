@@ -38,22 +38,18 @@ const Join = () => {
         <label id="email_label">
           <Input type="email" id="email" name="email" value={email} onChange={onChangeEmail} placeholder={'EMAIL'} />
         </label>
-        <br/>
         <label id="nickname_label">
           <Input type="nickname" id="nickname" name="nickname" value={nickname} onChange={onChangeNickname} placeholder={'NICKNAME'} />
         </label>
-        <br/>
         <label id="password_label">
           <Input type="password" id="password" name="password" value={password} onChange={onChangePassword} placeholder={'PASSWORD'} />
         </label>
-        <br/>
         <label id="passwordCheck_label">
           <Input type="passwordCheck" id="passwordCheck" name="passwordCheck" value={passwordCheck} onChange={onChangePasswordCheck} placeholder={'PASSWORD CHECK'} />
         </label>
-        <br/>
-        <Button type='submit'>회원가입</Button>
+        <Button type='submit' long>회원가입</Button>
         <Link to={'/login'}>
-          <Button>뒤로</Button>
+          <Button long>뒤로</Button>
         </Link>
       </Form>
       <ToastContainer />

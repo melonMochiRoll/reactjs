@@ -1,11 +1,18 @@
 import styled from "@emotion/styled";
 
+interface ButtonProps {
+  long?: boolean,
+}
+
 export const Container = styled.div`
   margin: 0 auto;
   padding: 30px;
 `;
 
 export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
 `;
 
@@ -21,8 +28,8 @@ export const Input = styled.input`
   }
 `;
 
-export const Button = styled.button`
-  width: 100px;
+export const Button = styled.button<ButtonProps>`
+  width: ${props => props.long ? '200px' : '100px'};
   margin: 5px;
   padding: 10px;
   cursor: pointer;
@@ -30,11 +37,24 @@ export const Button = styled.button`
   font-weight: 400;
   font-size: 17px;
   border: none;
-  border-radius: 14px;
   background-color: #005aff;
   color: #fff;
 
   &:hover {
     background-color: #2471ff;
   }
+`;
+
+export const SuccessMessage = styled.span`
+  font-family: 'IBM Plex Sans KR', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #07a400;
+`;
+
+export const ErrorMessage = styled.span`
+  font-family: 'IBM Plex Sans KR', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #cd002a;
 `;

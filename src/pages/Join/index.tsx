@@ -1,11 +1,12 @@
-import axios from 'axios';
-import React, { useCallback } from 'react';
+import axios, { AxiosResponse } from 'axios';
+import React, { useCallback, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import _, { debounce } from 'lodash';
 import useInput from '@Hooks/useInput';
-import { Button, Container, Input, Form } from '@Styles/common';
+import { Button, Container, Input, Form, ErrorMessage, SuccessMessage } from '@Styles/common';
 import { toast, ToastContainer } from 'react-toastify';
 import { TOASTIFY_BASIC_OPTION } from '@Src/constants/react.toastify.options';
-import { JOIN_SUCCESS } from '@Src/constants/user.response';
+import { JOIN_SUCCESS, PASSWORD_MISMATCH, PASSWORD_MATCH, EMAIL_EXIST, EMAIL_AVAILABLE, NICKNAME_EXIST, NICKNAME_AVAILABLE } from '@Src/constants/user.response';
 
 const Join = () => {
   const navigate = useNavigate();
@@ -13,6 +14,53 @@ const Join = () => {
   const [nickname, onChangeNickname] = useInput('');
   const [password, onChangePassword] = useInput('');
   const [passwordCheck, onChangePasswordCheck] = useInput('');
+  const [emailExistError, setEmailExistError] = useState(false);
+  const [nicknameExistError, setNicknameExistError] = useState(false);
+  const [passwordVerifyError, setPasswordVerifyError] = useState(false);
+
+  const CompareString = (a: string, b: string) => {
+    if (a === b) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const onVerifyEmail = useCallback(
+    debounce(
+      (e: any) => {
+      axios.get(
+        `api/user/email?email=${e.target.value}`)
+      .then((res: AxiosResponse) => {
+        setEmailExistError(res.data);
+      })
+      .catch((error: any) => {
+        console.dir(error);
+      });
+    }, 250),
+  []);
+
+  const onVerifyNickname = useCallback(
+    debounce(
+      (e: any) => {
+      axios.get(
+        `api/user/nickname?nickname=${encodeURIComponent(e.target.value)}`)
+      .then((res: AxiosResponse) => {
+        console.log(res.data);
+        setNicknameExistError(res.data);
+      })
+      .catch((error: any) => {
+        console.dir(error);
+      });
+    }, 250),
+  []);
+
+  const onVerifyPassword = useCallback(
+    debounce((e: any) => {
+      const result = CompareString(e.target.value, password)
+      setPasswordVerifyError(!result);
+    }, 250),
+  [password]);
 
   const onSubmit = useCallback(
     (e) => {
@@ -27,26 +75,31 @@ const Join = () => {
         })
         .catch((error) => {
           console.dir(error);
-          //error logic
         });
     },
-    [email, nickname, password]);
+  [email, nickname, password]);
 
   return (
     <Container>
       <Form onSubmit={onSubmit}>
         <label id="email_label">
-          <Input type="email" id="email" name="email" value={email} onChange={onChangeEmail} placeholder={'EMAIL'} />
+          <Input type="email" id="email" name="email" value={email} onChange={onChangeEmail} onKeyUp={onVerifyEmail} placeholder={'EMAIL'} />
         </label>
+        {email && !emailExistError && <SuccessMessage>{EMAIL_AVAILABLE}</SuccessMessage>}
+        {email && emailExistError && <ErrorMessage>{EMAIL_EXIST}</ErrorMessage>}
         <label id="nickname_label">
-          <Input type="nickname" id="nickname" name="nickname" value={nickname} onChange={onChangeNickname} placeholder={'NICKNAME'} />
+          <Input type="nickname" id="nickname" name="nickname" value={nickname} onChange={onChangeNickname} onKeyUp={onVerifyNickname} placeholder={'NICKNAME'} />
         </label>
+        {nickname && !nicknameExistError && <SuccessMessage>{NICKNAME_AVAILABLE}</SuccessMessage>}
+        {nickname && nicknameExistError && <ErrorMessage>{NICKNAME_EXIST}</ErrorMessage>}
         <label id="password_label">
           <Input type="password" id="password" name="password" value={password} onChange={onChangePassword} placeholder={'PASSWORD'} />
         </label>
         <label id="passwordCheck_label">
-          <Input type="passwordCheck" id="passwordCheck" name="passwordCheck" value={passwordCheck} onChange={onChangePasswordCheck} placeholder={'PASSWORD CHECK'} />
+          <Input type="passwordCheck" id="passwordCheck" name="passwordCheck" value={passwordCheck} onChange={onChangePasswordCheck} onKeyUp={onVerifyPassword} placeholder={'PASSWORD CHECK'} />
         </label>
+        {password && passwordCheck && !passwordVerifyError && <SuccessMessage>{PASSWORD_MATCH}</SuccessMessage>}
+        {password && passwordCheck && passwordVerifyError && <ErrorMessage>{PASSWORD_MISMATCH}</ErrorMessage>}
         <Button type='submit' long>회원가입</Button>
         <Link to={'/login'}>
           <Button long>뒤로</Button>

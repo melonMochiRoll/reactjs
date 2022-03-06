@@ -46,7 +46,6 @@ const Join = () => {
       axios.get(
         `api/user/nickname?nickname=${encodeURIComponent(e.target.value)}`)
       .then((res: AxiosResponse) => {
-        console.log(res.data);
         setNicknameExistError(res.data);
       })
       .catch((error: any) => {
@@ -96,7 +95,7 @@ const Join = () => {
           <Input type="password" id="password" name="password" value={password} onChange={onChangePassword} placeholder={'PASSWORD'} />
         </label>
         <label id="passwordCheck_label">
-          <Input type="passwordCheck" id="passwordCheck" name="passwordCheck" value={passwordCheck} onChange={onChangePasswordCheck} onKeyUp={onVerifyPassword} placeholder={'PASSWORD CHECK'} />
+          <Input type="password" id="passwordCheck" name="passwordCheck" value={passwordCheck} onChange={onChangePasswordCheck} onKeyUp={onVerifyPassword} placeholder={'PASSWORD CHECK'} />
         </label>
         {password && passwordCheck && !passwordVerifyError && <SuccessMessage>{PASSWORD_MATCH}</SuccessMessage>}
         {password && passwordCheck && passwordVerifyError && <ErrorMessage>{PASSWORD_MISMATCH}</ErrorMessage>}

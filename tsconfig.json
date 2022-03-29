@@ -18,7 +18,8 @@
       "@Hooks/*": ["src/hooks/*"],
       "@Pages/*": ["src/pages/*"],
       "@Styles/*": ["src/styles/*"],
-      "@Typings/*": ["src/typings/*"]
+      "@Typings/*": ["src/typings/*"],
+      "@Utils/*": ["src/utils/*"],
     },
     "typeRoots": ["@typings"],
   }

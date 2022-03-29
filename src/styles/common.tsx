@@ -23,6 +23,9 @@ export const Input = styled.input`
   font-family: 'Nanum Gothic', sans-serif;
   font-size: 18px;
 
+  &:focus {
+    outline: none;
+  }
   &::placeholder {
     color: #8c8c8c;
   }

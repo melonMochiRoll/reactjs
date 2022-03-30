@@ -4,12 +4,13 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import LogIn from '@Pages/LogIn';
 import Join from '@Pages/Join';
 import NotFound from '@Pages/NotFound';
+import joinService from '@Pages/Join/service';
 
 render(
 <BrowserRouter>
   <Routes>
     <Route path="/login" element={<LogIn />}/>
-    <Route path="/join" element={<Join />}/>
+    <Route path="/join" element={<Join joinService={joinService} />}/>
     <Route path="/*" element={<NotFound />}/>
   </Routes>
 </BrowserRouter>,

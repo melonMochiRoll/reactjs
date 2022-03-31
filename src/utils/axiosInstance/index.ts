@@ -1,9 +1,7 @@
 import axios from "axios";
-import dotenv from 'dotenv';
-dotenv.config();
 
 const instance = axios.create({
-  baseURL: process.env.BASE_API,
+  baseURL: 'http://localhost:3005',
   withCredentials: true,
   timeout: 1000,
 });

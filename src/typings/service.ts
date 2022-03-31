@@ -1,10 +1,8 @@
 
 export interface JoinService {
-  onVerifyEmail: (
-    email: string
-    ) => Promise<boolean>,
-  onVerifyNickname: (
-    nickname: string
+  onVerifyValue: (
+    type: string,
+    value: string,
     ) => Promise<boolean>,
   onSubmit: (
     email: string,

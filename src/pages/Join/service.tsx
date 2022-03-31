@@ -1,19 +1,11 @@
 import request from '@Utils/axiosInstance';
 
-const onVerifyEmail = async (email: string): Promise<boolean> => {
+const onVerifyValue = async (type: string, value: string) => {
   try {
-    await request({ url: `api/user/email?email=${email}` });
+    await request({ url: `api/user?type=${type}&value=${value}` });
     return true;
   } catch (error) {
-    return false;
-  }
-};
-
-const onVerifyNickname = async (nickname: string): Promise<boolean> => {
-  try {
-    await request({ url: `api/user/nickname?nickname=${nickname}` });
-    return true;
-  } catch(error) {
+    console.dir(error);
     return false;
   }
 };
@@ -42,7 +34,6 @@ const onSubmit = async (
 };
 
 export default {
-  onVerifyEmail,
-  onVerifyNickname,
+  onVerifyValue,
   onSubmit,
 };

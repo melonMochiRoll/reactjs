@@ -3,8 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import _, { debounce } from 'lodash';
 import useInput from '@Hooks/useInput';
 import { Button, Container, Input, Form, ErrorMessage, SuccessMessage } from '@Styles/common';
-import { toast, ToastContainer } from 'react-toastify';
-import { TOASTIFY_BASIC_OPTION } from '@Src/constants/react.toastify.options';
 import { JOIN_SUCCESS, PASSWORD_MISMATCH, PASSWORD_MATCH, EMAIL_EXIST, EMAIL_AVAILABLE, NICKNAME_EXIST, NICKNAME_AVAILABLE } from '@Src/constants/user.response';
 import { JoinDependencies } from '@Src/typings/dependency';
 
@@ -18,21 +16,20 @@ const Join = ({ joinService }: JoinDependencies) => {
   const [nicknameExistError, setNicknameExistError] = useState(false);
   const [passwordVerifyError, setPasswordVerifyError] = useState(false);
 
-  const onVerifyEmail = useCallback(
+  const onVerifyValue = useCallback(
     debounce(
       async (e: any) => {
-        const target = e.target.value;
-        const verified = await joinService.onVerifyEmail(target);
-        setEmailExistError(verified);
-    }, 250),
-  []);
+        const type = e.target.name;
+        const value = e.target.value;
+        const verified = await joinService.onVerifyValue(value);
+        
+        if (type === 'email') {
+          setEmailExistError(verified);
+        }
 
-  const onVerifyNickname = useCallback(
-    debounce(
-      async (e: any) => {
-        const target = e.target.value;
-        const verified = await joinService.onVerifyNickname(target);
-        setNicknameExistError(verified);
+        if (type === 'nickname') {
+          setNicknameExistError(verified);
+        }
     }, 250),
   []);
 
@@ -43,15 +40,15 @@ const Join = ({ joinService }: JoinDependencies) => {
   [password, passwordCheck]);
 
   const onSubmit = useCallback(
-    async (e) => {
+    async (e: any) => {
       e.preventDefault();
       await joinService.onSubmit(
         email,
         nickname,
-        password,
-      ).then(() => {
+        password
+        )
+      .then(() => {
         navigate('/login');
-        toast.success(JOIN_SUCCESS, TOASTIFY_BASIC_OPTION);
       });
     },
   [email, nickname, password]);
@@ -60,20 +57,48 @@ const Join = ({ joinService }: JoinDependencies) => {
     <Container>
       <Form onSubmit={onSubmit}>
         <label id="email_label">
-          <Input type="email" id="email" name="email" value={email} onChange={onChangeEmail} onKeyUp={onVerifyEmail} placeholder={'EMAIL'} />
+          <Input
+            type="email"
+            id="email"
+            name="email"
+            value={email}
+            onChange={onChangeEmail}
+            onKeyUp={onVerifyValue}
+            placeholder={'EMAIL'} />
         </label>
           {email && !emailExistError && <SuccessMessage>{EMAIL_AVAILABLE}</SuccessMessage>}
           {email && emailExistError && <ErrorMessage>{EMAIL_EXIST}</ErrorMessage>}
         <label id="nickname_label">
-          <Input type="nickname" id="nickname" name="nickname" value={nickname} onChange={onChangeNickname} onKeyUp={onVerifyNickname} placeholder={'NICKNAME'} />
+          <Input
+            type="nickname"
+            id="nickname"
+            name="nickname"
+            value={nickname}
+            onChange={onChangeNickname}
+            onKeyUp={onVerifyValue}
+            placeholder={'NICKNAME'} />
         </label>
           {nickname && !nicknameExistError && <SuccessMessage>{NICKNAME_AVAILABLE}</SuccessMessage>}
           {nickname && nicknameExistError && <ErrorMessage>{NICKNAME_EXIST}</ErrorMessage>}
         <label id="password_label">
-          <Input type="password" id="password" name="password" value={password} onChange={onChangePassword} onKeyUp={onVerifyPassword} placeholder={'PASSWORD'} />
+          <Input
+            type="password"
+            id="password"
+            name="password"
+            value={password}
+            onChange={onChangePassword}
+            onKeyUp={onVerifyPassword}
+            placeholder={'PASSWORD'} />
         </label>
         <label id="passwordCheck_label">
-          <Input type="password" id="passwordCheck" name="passwordCheck" value={passwordCheck} onChange={onChangePasswordCheck} onKeyUp={onVerifyPassword} placeholder={'PASSWORD CHECK'} />
+          <Input
+            type="password"
+            id="passwordCheck"
+            name="passwordCheck"
+            value={passwordCheck}
+            onChange={onChangePasswordCheck}
+            onKeyUp={onVerifyPassword}
+            placeholder={'PASSWORD CHECK'} />
         </label>
           {password && passwordCheck && !passwordVerifyError && <SuccessMessage>{PASSWORD_MATCH}</SuccessMessage>}
           {password && passwordCheck && passwordVerifyError && <ErrorMessage>{PASSWORD_MISMATCH}</ErrorMessage>}
@@ -82,7 +107,6 @@ const Join = ({ joinService }: JoinDependencies) => {
           <Button long>뒤로</Button>
         </Link>
       </Form>
-      <ToastContainer />
     </Container>
   )
 }

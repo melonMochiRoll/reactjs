@@ -1,8 +1,8 @@
 import request from '@Utils/axiosInstance';
 
-const onVerifyValue = async (type: string, value: string) => {
+const onVerifyValue = async (value: string) => {
   try {
-    await request({ url: `api/user?type=${type}&value=${value}` });
+    await request({ url: `api/user?value=${value}` });
     return true;
   } catch (error) {
     console.dir(error);

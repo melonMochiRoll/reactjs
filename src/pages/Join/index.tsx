@@ -3,10 +3,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import _, { debounce } from 'lodash';
 import useInput from '@Hooks/useInput';
 import { Button, Container, Input, Form, ErrorMessage, SuccessMessage } from '@Styles/common';
-import { JOIN_SUCCESS, PASSWORD_MISMATCH, PASSWORD_MATCH, EMAIL_EXIST, EMAIL_AVAILABLE, NICKNAME_EXIST, NICKNAME_AVAILABLE } from '@Src/constants/user.response';
-import { JoinDependencies } from '@Src/typings/dependency';
+import { PASSWORD_MISMATCH, PASSWORD_MATCH, EMAIL_EXIST, EMAIL_AVAILABLE, NICKNAME_EXIST, NICKNAME_AVAILABLE } from '@Src/constants/user.response';
+import { onSubmit, onVerifyValue } from '@Pages/Join/service';
 
-const Join = ({ joinService }: JoinDependencies) => {
+const Join = () => {
   const navigate = useNavigate();
   const [email, onChangeEmail] = useInput('');
   const [nickname, onChangeNickname] = useInput('');
@@ -16,36 +16,29 @@ const Join = ({ joinService }: JoinDependencies) => {
   const [nicknameExistError, setNicknameExistError] = useState(false);
   const [passwordVerifyError, setPasswordVerifyError] = useState(false);
 
-  const onVerifyValue = useCallback(
-    debounce(
-      async (e: any) => {
+  const handleSetErrorState = (setErrorState: React.Dispatch<React.SetStateAction<boolean>>) => {
+    return useCallback(
+      debounce(async (e: any) => {
         const type = e.target.name;
         const value = e.target.value;
-        const verified = await joinService.onVerifyValue(value);
-        
-        if (type === 'email') {
-          setEmailExistError(verified);
-        }
+        const verified = await onVerifyValue(type, value);
+        setErrorState(verified);
+      }, 500), []);
+  };
 
-        if (type === 'nickname') {
-          setNicknameExistError(verified);
-        }
-    }, 250),
-  []);
-
-  const onVerifyPassword = useCallback(
+  const handleVerifyPassword = useCallback(
     debounce(() => {
       setPasswordVerifyError(password !== passwordCheck);
     }, 250),
   [password, passwordCheck]);
 
-  const onSubmit = useCallback(
+  const handleSubmit = useCallback(
     async (e: any) => {
       e.preventDefault();
-      await joinService.onSubmit(
+      await onSubmit(
         email,
         nickname,
-        password
+        password,
         )
       .then(() => {
         navigate('/login');
@@ -55,7 +48,7 @@ const Join = ({ joinService }: JoinDependencies) => {
 
   return (
     <Container>
-      <Form onSubmit={onSubmit}>
+      <Form onSubmit={handleSubmit}>
         <label id="email_label">
           <Input
             type="email"
@@ -63,7 +56,7 @@ const Join = ({ joinService }: JoinDependencies) => {
             name="email"
             value={email}
             onChange={onChangeEmail}
-            onKeyUp={onVerifyValue}
+            onKeyUp={handleSetErrorState(setEmailExistError)}
             placeholder={'EMAIL'} />
         </label>
           {email && !emailExistError && <SuccessMessage>{EMAIL_AVAILABLE}</SuccessMessage>}
@@ -75,7 +68,7 @@ const Join = ({ joinService }: JoinDependencies) => {
             name="nickname"
             value={nickname}
             onChange={onChangeNickname}
-            onKeyUp={onVerifyValue}
+            onKeyUp={handleSetErrorState(setNicknameExistError)}
             placeholder={'NICKNAME'} />
         </label>
           {nickname && !nicknameExistError && <SuccessMessage>{NICKNAME_AVAILABLE}</SuccessMessage>}
@@ -87,7 +80,7 @@ const Join = ({ joinService }: JoinDependencies) => {
             name="password"
             value={password}
             onChange={onChangePassword}
-            onKeyUp={onVerifyPassword}
+            onKeyUp={handleVerifyPassword}
             placeholder={'PASSWORD'} />
         </label>
         <label id="passwordCheck_label">
@@ -97,7 +90,7 @@ const Join = ({ joinService }: JoinDependencies) => {
             name="passwordCheck"
             value={passwordCheck}
             onChange={onChangePasswordCheck}
-            onKeyUp={onVerifyPassword}
+            onKeyUp={handleVerifyPassword}
             placeholder={'PASSWORD CHECK'} />
         </label>
           {password && passwordCheck && !passwordVerifyError && <SuccessMessage>{PASSWORD_MATCH}</SuccessMessage>}

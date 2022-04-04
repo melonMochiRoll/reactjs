@@ -1,16 +1,17 @@
 import request from '@Utils/axiosInstance';
 
-const onVerifyValue = async (value: string) => {
-  try {
-    await request({ url: `api/user?value=${value}` });
+export const onVerifyValue = async (
+  type: string,
+  value: string,
+): Promise<boolean> => {
+  const { data } = await request({ url: `api/user/${type}?value=${value}` });
+  if (data) {
     return true;
-  } catch (error) {
-    console.dir(error);
-    return false;
   }
+  return false;
 };
 
-const onSubmit = async (
+export const onSubmit = async (
   email: string,
   nickname: string,
   password: string,
@@ -31,9 +32,4 @@ const onSubmit = async (
     console.dir(error);
     return false;
   }
-};
-
-export default {
-  onVerifyValue,
-  onSubmit,
 };

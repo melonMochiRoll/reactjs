@@ -2,9 +2,10 @@ import React, { useCallback, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import _, { debounce } from 'lodash';
 import useInput from '@Hooks/useInput';
-import { Button, Container, Input, Form, ErrorMessage, SuccessMessage } from '@Styles/common';
+import { Container, Form, ErrorMessage, SuccessMessage } from '@Styles/common';
 import { PASSWORD_MISMATCH, PASSWORD_MATCH, EMAIL_EXIST, EMAIL_AVAILABLE, NICKNAME_EXIST, NICKNAME_AVAILABLE } from '@Src/constants/user.response';
 import { onSubmit, onVerifyValue } from '@Pages/Join/service';
+import { Button, ButtonGroup, TextField } from '@mui/material';
 
 const Join = () => {
   const navigate = useNavigate();
@@ -50,55 +51,63 @@ const Join = () => {
     <Container>
       <Form onSubmit={handleSubmit}>
         <label id="email_label">
-          <Input
+          <TextField
             type="email"
             id="email"
             name="email"
+            label="Email"
+            variant="standard"
+            margin="normal"
             value={email}
             onChange={onChangeEmail}
-            onKeyUp={handleSetErrorState(setEmailExistError)}
-            placeholder={'EMAIL'} />
+            onKeyUp={handleSetErrorState(setEmailExistError)} />
         </label>
           {email && !emailExistError && <SuccessMessage>{EMAIL_AVAILABLE}</SuccessMessage>}
           {email && emailExistError && <ErrorMessage>{EMAIL_EXIST}</ErrorMessage>}
         <label id="nickname_label">
-          <Input
+          <TextField
             type="nickname"
             id="nickname"
             name="nickname"
+            label="Nickname"
+            variant="standard"
+            margin="normal"
             value={nickname}
             onChange={onChangeNickname}
-            onKeyUp={handleSetErrorState(setNicknameExistError)}
-            placeholder={'NICKNAME'} />
+            onKeyUp={handleSetErrorState(setNicknameExistError)} />
         </label>
           {nickname && !nicknameExistError && <SuccessMessage>{NICKNAME_AVAILABLE}</SuccessMessage>}
           {nickname && nicknameExistError && <ErrorMessage>{NICKNAME_EXIST}</ErrorMessage>}
         <label id="password_label">
-          <Input
+          <TextField
             type="password"
             id="password"
             name="password"
+            label="Password"
+            variant="standard"
+            margin="normal"
             value={password}
             onChange={onChangePassword}
-            onKeyUp={handleVerifyPassword}
-            placeholder={'PASSWORD'} />
+            onKeyUp={handleVerifyPassword} />
         </label>
         <label id="passwordCheck_label">
-          <Input
+          <TextField
             type="password"
             id="passwordCheck"
             name="passwordCheck"
+            label="Password Check"
+            variant="standard"
+            margin="normal"
             value={passwordCheck}
             onChange={onChangePasswordCheck}
-            onKeyUp={handleVerifyPassword}
-            placeholder={'PASSWORD CHECK'} />
+            onKeyUp={handleVerifyPassword} />
         </label>
           {password && passwordCheck && !passwordVerifyError && <SuccessMessage>{PASSWORD_MATCH}</SuccessMessage>}
           {password && passwordCheck && passwordVerifyError && <ErrorMessage>{PASSWORD_MISMATCH}</ErrorMessage>}
-        <Button type='submit' long>회원가입</Button>
-        <Link to={'/login'}>
-          <Button long>뒤로</Button>
-        </Link>
+        <ButtonGroup size="large" variant="contained" sx={{ mt: 3 }}>
+          <Button type='submit'>회원가입</Button>
+          <Button component={Link} to={'/login'}>뒤로</Button>
+        </ButtonGroup>
       </Form>
     </Container>
   )

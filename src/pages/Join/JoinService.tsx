@@ -1,10 +1,10 @@
-import request from '@Utils/axiosInstance';
+import axiosClient from '@Utils/axiosInstance';
 
-export const onVerifyValue = async (
+export const onExistCheck = async (
   type: string,
   value: string,
 ): Promise<boolean> => {
-  const { data } = await request({ url: `api/user/${type}?value=${value}` });
+  const { data } = await axiosClient({ url: `api/user/${type}?value=${value}` });
   if (data) {
     return true;
   }
@@ -17,7 +17,7 @@ export const onSubmit = async (
   password: string,
 ): Promise<boolean> => {
   try {
-    await request({
+    await axiosClient({
       method: 'post',
       url: '/api/user',
       data: {

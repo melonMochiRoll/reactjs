@@ -1,4 +1,5 @@
 import axiosClient from '@Utils/axiosInstance';
+import { JoinFormType } from '@Src/pages/Join/JoinContainer';
 
 export const onExistCheck = async (
   type: string,
@@ -11,20 +12,14 @@ export const onExistCheck = async (
   return false;
 };
 
-export const onSubmit = async (
-  email: string,
-  nickname: string,
-  password: string,
+export const onJoin = async (
+  form: JoinFormType
 ): Promise<boolean> => {
   try {
     await axiosClient({
       method: 'post',
       url: '/api/user',
-      data: {
-        email,
-        nickname,
-        password,
-      },
+      data: form,
       withCredentials: true,
     });
     return true;

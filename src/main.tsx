@@ -10,7 +10,7 @@ render(
   <Routes>
     <Route path="/login" element={<LogIn />}/>
     <Route path="/join" element={<Join />}/>
-    <Route element={<NotFound />}/>
+    <Route path="*" element={<NotFound />}/>
   </Routes>
 </BrowserRouter>,
 document.querySelector('#app'));

@@ -1,16 +1,6 @@
 import { useCallback, useState } from "react";
 
-export interface useFormType {
-  email: string;
-  nickname: string;
-  password: string;
-  passwordCheck: string;
-};
-
-type onChangeValues = (e: React.ChangeEvent<HTMLInputElement>) => void;
-type onChangeErrors = (name: string, error: string) => void;
-type ReturnTypes = [useFormType, useFormType, onChangeValues, onChangeErrors];
-const useForm = (initialValue: useFormType): ReturnTypes => {
+const useForm = <T>(initialValue: T) => {
   const [values, setValues] = useState(initialValue);
   const [errors, setErrors] = useState(initialValue);
 
@@ -25,10 +15,16 @@ const useForm = (initialValue: useFormType): ReturnTypes => {
     setErrors({
       ...errors,
       [name]: error,
-    })
+    });
   }, [errors]);
 
-  return [values, errors, onChangeValues, onChangeErrors]
+  return [values, errors, onChangeValues, setErrors, onChangeErrors] as [
+    T,
+    T,
+    typeof onChangeValues,
+    typeof setErrors,
+    typeof onChangeErrors,
+  ];
 }
 
 export default useForm;

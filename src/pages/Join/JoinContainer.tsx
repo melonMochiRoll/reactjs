@@ -1,107 +1,128 @@
-import React, { FC, useCallback, useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import _, { debounce } from 'lodash';
+import React, { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { onJoin, onExistCheck } from '@Pages/Join/JoinService';
-import useForm from '@Src/hooks/useForm';
-import { EMAIL_AVAILABLE, EMAIL_EXIST, NICKNAME_AVAILABLE, NICKNAME_EXIST, PASSWORD_MATCH, PASSWORD_MISMATCH } from '@Src/constants/user.response';
-import { Container, ErrorMessage, Form, SuccessMessage } from '@Src/styles/common';
-import { InputTextField } from '@Src/components/InputTextField';
-import { Button, ButtonGroup } from '@mui/material';
+import JoinPresenter from './JoinPresenter';
 
-export type JoinFormType = {
+export interface JoinSubmitFormType {
   email: string;
   nickname: string;
   password: string;
 };
 
+export interface JoinFormType extends JoinSubmitFormType {
+  passwordCheck: string;
+};
+
+export interface JoinValidationType {
+  email: (email: string) => Promise<string>,
+  nickname: (nickname: string) => Promise<string>,
+  password: (password: string, passwordCheck: string) => string,
+  passwordCheck: (passwordCheck: string) => string,
+};
+
 const JoinContainer: FC = () => {
   const navigate = useNavigate();
-  const [form, errors, onChangeForm, onChangeError] = useForm({
-    email: '',
-    nickname: '',
-    password: '',
-    passwordCheck: '',
-  });
-  const { email, nickname, password, passwordCheck } = form;
 
   const validation = {
-    valueExist: useCallback(
-      debounce(async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const type = e.target.name;
-        const value = e.target.value;
-        const result = await onExistCheck(type, value);
-        if (result) {
-          onChangeError(type, EMAIL_EXIST);
-        } else {
-          onChangeError(type, '');
-        }
-      }, 500), []),
-    passwordMatch: useCallback(
-      debounce(() => {
-        if(password !== passwordCheck) {
-          onChangeError('password', PASSWORD_MISMATCH);
-        } else {
-          onChangeError('password', '');
-        }
-      }, 500), [password, passwordCheck]),
+
+    email: async (email: string) => {
+      if (email === '') {
+        return '필수 입력 사항입니다.'
+      }
+
+      if (!validateEmail(email)) {
+        return '유효하지 않은 이메일 주소입니다.'
+      }
+
+      try {
+        await onExistCheck('email', email);
+        return '이미 사용 중인 이메일입니다.';
+      } catch(e){
+        return '';
+      }
+    },
+
+    nickname: async (nickname: string) => {
+      if (nickname === '') {
+        return '필수 입력 사항입니다.';
+      }
+
+      if (!/^[A-Za-z0-9]{4,12}$/.test(nickname)) {
+        return '닉네임은 4~12자의 영문 혹은 숫자로 이루어져야 합니다.';
+      }
+
+      try {
+        await onExistCheck('nickname', nickname);
+        return '이미 사용 중인 닉네임입니다.';
+      } catch(e){
+        return '';
+      }
+    },
+
+    password: (password: string, passwordCheck: string) => {
+      if(password === '') {
+        return '필수 입력 사항입니다.';
+      }
+
+      if(password.length < 6 || password.length > 12) {
+        return '비밀번호는 6~12자로 이루어져야 합니다.';
+      }
+
+      if(password !== passwordCheck) {
+        return '비밀번호를 확인해 주세요';
+      }
+      return '';
+    },
+
+    passwordCheck: (passwordCheck: string) => {
+      if(passwordCheck === '') {
+        return '필수 입력 사항입니다.';
+      }
+      return '';
+    }
   };
 
   const onSubmit = async (
-    form: JoinFormType
+    joinForm: JoinFormType,
+    setErrors: React.Dispatch<React.SetStateAction<JoinFormType>>,
     ) => {
-      await onJoin(form)
-        .then(() => {
-          navigate('/login');
-        });
-    };
+    const emailError = await validation.email(joinForm.email);
+    const nicknameError = await validation.nickname(joinForm.nickname);
+    const passwordError = validation.password(joinForm.password, joinForm.passwordCheck);
+    const passwordCheckError = validation.passwordCheck(joinForm.passwordCheck);
 
-  useEffect(() => {
+    setErrors({
+      email: emailError,
+      nickname: nicknameError,
+      password: passwordError,
+      passwordCheck: passwordCheckError,
+    });
 
-  });
+    if(emailError || nicknameError || passwordError || passwordCheckError) {
+      return;
+    }
+
+    const { passwordCheck, ...joinSubmitForm } = joinForm;
+
+    try {
+      await onJoin(joinSubmitForm);
+      navigate('/login');
+    } catch(e) {
+      console.dir(e);
+    }
+  };
 
   return (
-    <Container>
-      <Form>
-        <InputTextField
-          label='Email'
-          name='email'
-          value={email}
-          onChange={onChangeForm}
-          onKeyUp={validation.valueExist}
-        />
-        {email && !errors.email && <SuccessMessage>{EMAIL_AVAILABLE}</SuccessMessage>}
-        {email && errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
-        <InputTextField
-          label="Nickname"
-          name="nickname"
-          value={nickname}
-          onChange={onChangeForm}
-        />
-        {form.nickname && !errors.nickname && <SuccessMessage>{NICKNAME_AVAILABLE}</SuccessMessage>}
-        {form.nickname && errors.nickname && <ErrorMessage>{NICKNAME_EXIST}</ErrorMessage>}
-        <InputTextField
-          label="Password"
-          name="password"
-          value={password}
-          onChange={onChangeForm}
-          onKeyUp={validation.passwordMatch}
-        />
-        <InputTextField
-          label="Password Check"
-          name="passwordCheck"
-          value={passwordCheck}
-          onChange={onChangeForm}
-          onKeyUp={validation.passwordMatch}
-        />
-        {form.password && form.passwordCheck && !errors.password && <SuccessMessage>{PASSWORD_MATCH}</SuccessMessage>}
-        {form.password && form.passwordCheck && errors.password && <ErrorMessage>{PASSWORD_MISMATCH}</ErrorMessage>}
-        <ButtonGroup size="large" variant="contained" sx={{ mt: 3 }}>
-          <Button type='submit' sx={{ width: 200 }}>회원가입</Button>
-        </ButtonGroup>
-        <Button component={Link} to={'/login'} sx={{ mt: 3 }}>뒤로</Button>
-      </Form>
-    </Container>
+    <JoinPresenter
+      validation={validation}
+      onSubmit={onSubmit}
+    />
   )
-}
+};
 
 export default JoinContainer;
+
+export const validateEmail = (email: string) => {
+  const regex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
+  return regex.test(email.toLowerCase());
+};

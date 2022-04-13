@@ -1,30 +1,30 @@
-import axiosClient from '@Utils/axiosInstance';
-import { JoinFormType } from '@Src/pages/Join/JoinContainer';
+import { axiosClient } from '@Utils/axiosInstance';
+import { JoinSubmitFormType } from '@Src/pages/Join/JoinContainer';
 
 export const onExistCheck = async (
   type: string,
   value: string,
-): Promise<boolean> => {
-  const { data } = await axiosClient({ url: `api/user/${type}?value=${value}` });
-  if (data) {
-    return true;
-  }
-  return false;
+  ) => {
+  try {
+    await axiosClient({ url: `api/user/${type}?value=${value}` });
+    return Promise.resolve();
+  } catch(e) {
+    return Promise.reject(e);
+  };
 };
 
 export const onJoin = async (
-  form: JoinFormType
-): Promise<boolean> => {
-  try {
-    await axiosClient({
-      method: 'post',
-      url: '/api/user',
-      data: form,
-      withCredentials: true,
-    });
-    return true;
-  } catch(error) {
-    console.dir(error);
-    return false;
-  }
+  form: JoinSubmitFormType,
+  ) => {
+    try {
+      await axiosClient({
+        method: 'POST',
+        url: '/api/user',
+        data: form,
+        withCredentials: true,
+      });
+      return Promise.resolve();
+    } catch(e) {
+      return Promise.reject(e);
+    }   
 };

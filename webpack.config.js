@@ -11,7 +11,6 @@ module.exports = {
       '.ts',
       '.tsx',
       '.json',
-      '.css'
     ],
     alias: {
       '@Src': path.resolve(__dirname, 'src'),

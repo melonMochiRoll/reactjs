@@ -4,7 +4,14 @@ import useForm from "@Src/hooks/useForm";
 import { Container, Form } from "@Src/styles/common";
 import React, { FC } from "react";
 import { Link } from "react-router-dom";
-import { JoinFormType, JoinValidationType } from "@Src/pages/Join/JoinContainer";
+import { JoinFormType } from "@Src/pages/Join/JoinContainer";
+
+export interface JoinValidationType {
+  email: (email: string) => Promise<string>,
+  nickname: (nickname: string) => Promise<string>,
+  password: (password: string, passwordCheck: string) => string,
+  passwordCheck: (passwordCheck: string) => string,
+};
 
 interface Props {
   validation: JoinValidationType,

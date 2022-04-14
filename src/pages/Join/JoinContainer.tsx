@@ -2,6 +2,8 @@ import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { onJoin, onExistCheck } from '@Pages/Join/JoinService';
 import JoinPresenter from './JoinPresenter';
+import { TOASTIFY_BASIC_OPTION } from '@Src/constants/react.toastify.options';
+import { toast } from 'react-toastify';
 
 export interface JoinSubmitFormType {
   email: string;
@@ -11,13 +13,6 @@ export interface JoinSubmitFormType {
 
 export interface JoinFormType extends JoinSubmitFormType {
   passwordCheck: string;
-};
-
-export interface JoinValidationType {
-  email: (email: string) => Promise<string>,
-  nickname: (nickname: string) => Promise<string>,
-  password: (password: string, passwordCheck: string) => string,
-  passwordCheck: (passwordCheck: string) => string,
 };
 
 const JoinContainer: FC = () => {
@@ -109,6 +104,7 @@ const JoinContainer: FC = () => {
       navigate('/login');
     } catch(e) {
       console.dir(e);
+      toast.error('회원가입에 실패했습니다.', TOASTIFY_BASIC_OPTION);
     }
   };
 

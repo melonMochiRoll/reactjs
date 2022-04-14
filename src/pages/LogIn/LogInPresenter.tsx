@@ -38,6 +38,7 @@ const LogInPresenter: FC<Props> = ({ onSubmit }) => {
         errorMessage={errors.email}
       />
       <InputTextField
+        type="password"
         label='비밀번호'
         name='password'
         value={password}

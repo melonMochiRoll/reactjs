@@ -51,15 +51,13 @@ const LogInContainer: FC = () => {
       return;
     }
 
-    await onLogIn(logInForm)
-      .then((res) => {
-        console.log(res);
-        navigate('/login');
-      })
-      .catch((e) => {
-        console.dir(e);
-        toast.error('이메일 혹은 비밀번호를 확인해 주세요', TOASTIFY_BASIC_OPTION);
-      });
+    try {
+      await onLogIn(logInForm);
+      navigate('/login');
+    } catch(e) {
+      console.dir(e);
+      toast.error('이메일 혹은 비밀번호를 확인해 주세요', TOASTIFY_BASIC_OPTION);
+    }
   };
 
   return (

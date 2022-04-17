@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import { LogInFormType } from '@Src/pages/LogIn/LogInContainer';
-import useForm from '@Src/hooks/useForm';
 import { Container, Form } from '@Src/styles/common';
 import { InputTextField } from '@Src/components/InputTextField';
 import { Box, Button, ButtonGroup, Typography } from '@mui/material';
@@ -8,17 +7,18 @@ import { Link } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
 interface Props {
-  onSubmit: (
-    form: LogInFormType,
-    setErrors: React.Dispatch<React.SetStateAction<LogInFormType>>,
-  ) => void;
+  form: any,
+  errors: any,
+  onChangeForm: any,
+  onSubmit: (form: LogInFormType) => void;
 };
 
-const LogInPresenter: FC<Props> = ({ onSubmit }) => {
-  const [form, errors, onChangeForm, setErrors, onChangeError] = useForm({
-    email: '',
-    password: '',
-  });
+const LogInPresenter: FC<Props> = ({
+  form,
+  errors,
+  onChangeForm,
+  onSubmit,
+  }) => {
   const { email, password } = form;
 
   return (
@@ -28,7 +28,7 @@ const LogInPresenter: FC<Props> = ({ onSubmit }) => {
       onSubmit({
         email,
         password
-      }, setErrors);
+      });
     }}>
       <InputTextField
         label='이메일'

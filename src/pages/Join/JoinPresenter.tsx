@@ -1,6 +1,5 @@
 import { Box, Button, ButtonGroup, Typography } from "@mui/material";
 import { InputTextField } from "@Src/components/InputTextField";
-import useForm from "@Src/hooks/useForm";
 import { Container, Form } from "@Src/styles/common";
 import React, { FC } from "react";
 import { Link } from "react-router-dom";
@@ -14,20 +13,22 @@ export interface JoinValidationType {
 };
 
 interface Props {
+  form: JoinFormType,
+  errors: JoinFormType,
+  onChangeForm: (e: any) => void,
+  onChangeError: (name: string, error: string) => void,
   validation: JoinValidationType,
-  onSubmit: (
-    form: JoinFormType,
-    setErrors: React.Dispatch<React.SetStateAction<JoinFormType>>,
-  ) => void,
+  onSubmit: (form: JoinFormType) => void,
 };
 
-const JoinPresenter: FC<Props> = ({ validation, onSubmit }) => {
-  const [form, errors, onChangeForm, setErrors, onChangeError] = useForm({
-    email: '',
-    nickname: '',
-    password: '',
-    passwordCheck: '',
-  });
+const JoinPresenter: FC<Props> = ({
+  form,
+  errors,
+  onChangeForm,
+  onChangeError,
+  validation,
+  onSubmit,
+  }) => {
   const { email, nickname, password, passwordCheck } = form;
 
   return (
@@ -39,7 +40,7 @@ const JoinPresenter: FC<Props> = ({ validation, onSubmit }) => {
           nickname,
           password,
           passwordCheck
-        }, setErrors);
+        });
       }}>
         <InputTextField
           label='이메일'

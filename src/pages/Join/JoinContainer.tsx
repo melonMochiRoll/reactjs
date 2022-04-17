@@ -4,6 +4,7 @@ import { onJoin, onExistCheck } from '@Pages/Join/JoinService';
 import JoinPresenter from './JoinPresenter';
 import { TOASTIFY_BASIC_OPTION } from '@Src/constants/react.toastify.options';
 import { toast } from 'react-toastify';
+import useForm from '@Src/hooks/useForm';
 
 export interface JoinSubmitFormType {
   email: string;
@@ -17,6 +18,12 @@ export interface JoinFormType extends JoinSubmitFormType {
 
 const JoinContainer: FC = () => {
   const navigate = useNavigate();
+  const [form, errors, onChangeForm, setErrors, onChangeError] = useForm({
+    email: '',
+    nickname: '',
+    password: '',
+    passwordCheck: '',
+  });
 
   const validation = {
 
@@ -77,10 +84,7 @@ const JoinContainer: FC = () => {
     }
   };
 
-  const onSubmit = async (
-    joinForm: JoinFormType,
-    setErrors: React.Dispatch<React.SetStateAction<JoinFormType>>,
-    ) => {
+  const onSubmit = async (joinForm: JoinFormType) => {
     const emailError = await validation.email(joinForm.email);
     const nicknameError = await validation.nickname(joinForm.nickname);
     const passwordError = validation.password(joinForm.password, joinForm.passwordCheck);
@@ -110,6 +114,10 @@ const JoinContainer: FC = () => {
 
   return (
     <JoinPresenter
+      form={form}
+      errors={errors}
+      onChangeForm={onChangeForm}
+      onChangeError={onChangeError}
       validation={validation}
       onSubmit={onSubmit}
     />

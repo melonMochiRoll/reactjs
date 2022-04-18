@@ -6,15 +6,20 @@ import Join from '@Pages/Join/JoinContainer';
 import NotFound from '@Pages/NotFound';
 import { ThemeProvider } from '@mui/material/styles';
 import { materialGlobalTheme } from '@Src/styles/materialGlobalTheme';
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+const queryClient = new QueryClient();
 
 render(
 <BrowserRouter>
-  <ThemeProvider theme={materialGlobalTheme}>
-    <Routes>
-      <Route path="/login" element={<LogIn />}/>
-      <Route path="/join" element={<Join />}/>
-      <Route path="*" element={<NotFound />}/>
-    </Routes>
-  </ThemeProvider>
+  <QueryClientProvider client={queryClient}>
+    <ThemeProvider theme={materialGlobalTheme}>
+      <Routes>
+        <Route path="/login" element={<LogIn />}/>
+        <Route path="/join" element={<Join />}/>
+        <Route path="*" element={<NotFound />}/>
+      </Routes>
+    </ThemeProvider>
+  </QueryClientProvider>
 </BrowserRouter>,
 document.querySelector('#app'));

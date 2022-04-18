@@ -82,8 +82,8 @@ const JoinPresenter: FC<Props> = ({
           name="passwordCheck"
           value={passwordCheck}
           onChange={onChangeForm}
-          onBlur={(e: any) => {
-            onChangeError(e.target.name, validation.passwordCheck(passwordCheck));
+          onBlur={() => {
+            onChangeError('password', validation.password(password, passwordCheck));
           }}
           errorMessage={errors.passwordCheck}
         />

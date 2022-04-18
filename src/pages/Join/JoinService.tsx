@@ -1,12 +1,22 @@
 import { axiosClient } from '@Utils/axiosInstance';
 import { JoinSubmitFormType } from '@Src/pages/Join/JoinContainer';
 
-export const onExistCheck = async (
-  type: string,
-  value: string,
+export const onCheckEmail = async (
+  email: string,
   ) => {
   try {
-    await axiosClient({ url: `api/user/${type}?value=${value}` });
+    await axiosClient({ url: `api/user/checkEmail?email=${email}` });
+    return Promise.resolve();
+  } catch(e) {
+    return Promise.reject(e);
+  };
+};
+
+export const onCheckNickname = async (
+  nickname: string,
+  ) => {
+  try {
+    await axiosClient({ url: `api/user/checkNickname?nickname=${nickname}` });
     return Promise.resolve();
   } catch(e) {
     return Promise.reject(e);

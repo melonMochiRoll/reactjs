@@ -58,7 +58,7 @@ const LogInContainer: FC = () => {
 
     try {
       await onLogIn(logInForm);
-      navigate('/login');
+      navigate('/');
     } catch(e) {
       console.dir(e);
       toast.error('이메일 혹은 비밀번호를 확인해 주세요', TOASTIFY_BASIC_OPTION);

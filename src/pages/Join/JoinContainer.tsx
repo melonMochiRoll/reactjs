@@ -114,14 +114,14 @@ const JoinContainer: FC = () => {
   };
 
   return (
-    <JoinPresenter
-      form={form}
-      errors={errors}
-      onChangeForm={onChangeForm}
-      onChangeError={onChangeError}
-      validation={validation}
-      onSubmit={onSubmit}
-    />
+      <JoinPresenter
+        form={form}
+        errors={errors}
+        onChangeForm={onChangeForm}
+        onChangeError={onChangeError}
+        validation={validation}
+        onSubmit={onSubmit}
+      />
   )
 };
 

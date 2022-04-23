@@ -2,7 +2,6 @@ import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { onCheckEmail, onCheckNickname, onJoin } from '@Pages/Join/JoinService';
 import JoinPresenter from './JoinPresenter';
-import { TOASTIFY_BASIC_OPTION } from '@Src/constants/react.toastify.options';
 import { toast } from 'react-toastify';
 import useForm from '@Src/hooks/useForm';
 
@@ -105,11 +104,11 @@ const JoinContainer: FC = () => {
 
     try {
       await onJoin(joinSubmitForm);
-      toast.success('회원가입이 완료되었습니다.', TOASTIFY_BASIC_OPTION);
+      toast.success('회원가입이 완료되었습니다.');
       navigate('/login');
     } catch(e) {
       console.error(e);
-      toast.error('회원가입에 실패했습니다.', TOASTIFY_BASIC_OPTION);
+      toast.error('회원가입에 실패했습니다.');
     }
   };
 

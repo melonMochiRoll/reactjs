@@ -1,8 +1,6 @@
 import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { TOASTIFY_BASIC_OPTION } from '@Constants/react.toastify.options';
 import { onLogIn } from '@Src/pages/LogIn/LogInService';
 import { validateEmail } from '@Src/pages/Join/JoinContainer';
 import LogInPresenter from '@Src/pages/LogIn/LogInPresenter';
@@ -61,7 +59,7 @@ const LogInContainer: FC = () => {
       navigate('/');
     } catch(e) {
       console.dir(e);
-      toast.error('이메일 혹은 비밀번호를 확인해 주세요', TOASTIFY_BASIC_OPTION);
+      toast.error('이메일 혹은 비밀번호를 확인해 주세요');
     }
   };
 

@@ -4,7 +4,6 @@ import { Container, Form } from '@Src/styles/common';
 import { InputTextField } from '@Src/components/InputTextField';
 import { Box, Button, ButtonGroup, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
 import MainLayout from '@Src/layouts/MainLayout';
 
 interface Props {
@@ -58,7 +57,6 @@ const LogInPresenter: FC<Props> = ({
             <Button component={Link} to={'/join'} sx={{ p: 0, ml: 1, fontWeight: 'bold' }}>회원가입</Button>
           </Box>
         </Form>
-        <ToastContainer />
       </Container>
     </MainLayout>
   )

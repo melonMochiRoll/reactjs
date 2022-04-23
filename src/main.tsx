@@ -7,6 +7,8 @@ import NotFound from '@Pages/NotFound';
 import { ThemeProvider } from '@mui/material/styles';
 import { materialGlobalTheme } from '@Src/styles/materialGlobalTheme';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import MainPage from '@Src/pages/MainPage/MainPageContainer';
+import Core from '@Src/components/Core';
 
 const queryClient = new QueryClient();
 
@@ -15,10 +17,12 @@ render(
   <QueryClientProvider client={queryClient}>
     <ThemeProvider theme={materialGlobalTheme}>
       <Routes>
+        <Route path="/" element={<MainPage />}/>
         <Route path="/login" element={<LogIn />}/>
         <Route path="/join" element={<Join />}/>
         <Route path="*" element={<NotFound />}/>
       </Routes>
+      <Core />
     </ThemeProvider>
   </QueryClientProvider>
 </BrowserRouter>,

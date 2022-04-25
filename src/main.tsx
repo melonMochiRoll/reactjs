@@ -7,7 +7,7 @@ import NotFound from '@Pages/NotFound';
 import { ThemeProvider } from '@mui/material/styles';
 import { materialGlobalTheme } from '@Src/styles/materialGlobalTheme';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import MainPage from '@Src/pages/MainPage/MainPageContainer';
+import MainPage from '@Src/pages/MainPage';
 import Core from '@Src/components/Core';
 
 const queryClient = new QueryClient();

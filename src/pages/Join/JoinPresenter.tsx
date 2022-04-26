@@ -4,7 +4,7 @@ import { Container, Form } from "@Src/styles/common";
 import React, { FC } from "react";
 import { Link } from "react-router-dom";
 import { JoinFormType } from "@Src/pages/Join/JoinContainer";
-import MainLayout from "@Src/layouts/MainLayout";
+import MainLayout from "@Src/components/MainLayout";
 
 export interface JoinValidationType {
   email: (email: string) => Promise<string>,

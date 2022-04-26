@@ -4,12 +4,12 @@ import { Container, Form } from '@Src/styles/common';
 import { InputTextField } from '@Src/components/InputTextField';
 import { Box, Button, ButtonGroup, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
-import MainLayout from '@Src/layouts/MainLayout';
+import MainLayout from '@Src/components/MainLayout';
 
 interface Props {
-  form: any,
-  errors: any,
-  onChangeForm: any,
+  form: LogInFormType,
+  errors: LogInFormType,
+  onChangeForm: (e: any) => void,
   onSubmit: (form: LogInFormType) => void;
 };
 

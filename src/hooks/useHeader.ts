@@ -4,11 +4,6 @@ import { useCallback } from "react";
 import { useQuery } from "react-query";
 import { toast } from "react-toastify";
 
-const getUser = async (): Promise<User> => {
-  const { data } = await axiosClient({ url: `api/user` });
-  return data;
-};
-
 const useHeader = () => {
   const { status: userStatus, data: user, error: userError, refetch: userRefetch } = useQuery({
     queryKey: 'MyUserData',
@@ -22,9 +17,14 @@ const useHeader = () => {
       toast.info('로그아웃 되었습니다.');
       userRefetch();
     } catch(e) {}
-  }, [userRefetch])
+  }, [userRefetch]);
 
-  return { userStatus, user, userRefetch, onLogout };
+  return { userStatus, user, userError, userRefetch, onLogout };
 };
 
 export default useHeader;
+
+const getUser = async (): Promise<User> => {
+  const { data } = await axiosClient({ url: `api/user` });
+  return data;
+};

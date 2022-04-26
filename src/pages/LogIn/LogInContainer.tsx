@@ -5,6 +5,7 @@ import { onLogIn } from '@Src/pages/LogIn/LogInService';
 import { validateEmail } from '@Src/pages/Join/JoinContainer';
 import LogInPresenter from '@Src/pages/LogIn/LogInPresenter';
 import useForm from '@Src/hooks/useForm';
+import useHeader from '@Src/hooks/useHeader';
 
 export interface LogInFormType {
   email: string;
@@ -13,6 +14,7 @@ export interface LogInFormType {
 
 const LogInContainer: FC = () => {
   const navigate = useNavigate();
+  const { userRefetch } = useHeader(); 
   const [form, errors, onChangeForm, setErrors] = useForm({
     email: '',
     password: '',
@@ -56,6 +58,7 @@ const LogInContainer: FC = () => {
 
     try {
       await onLogIn(logInForm);
+      userRefetch();
       navigate('/');
     } catch(e) {
       console.dir(e);

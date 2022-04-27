@@ -4,17 +4,17 @@ import { useQuery } from "react-query";
 
 const useSearch = () => {
   const [keyword, setKeyword] = useState('');
-  const { status: searchPostStatus, data: searchPost, error: searchPostError } = useQuery(`${keyword}`, {
+  const { status: searchPostStatus, data: searchPost } = useQuery(`${keyword}`, {
     queryFn: getSearchData,
     enabled: !!keyword,
   });
 
-  return { searchPostStatus, searchPost, searchPostError, setKeyword };
+  return { searchPostStatus, searchPost, setKeyword };
 };
 
 export default useSearch;
 
 const getSearchData = async ({ queryKey }: any) => {
-  const { data } = await axiosClient({ url: `api/memo/${queryKey}` });
+  const { data } = await axiosClient({ url: `api/memo?keyword=${queryKey}` });
   return data;
 }

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 
 const useSearch = () => {
-  const [tag, setTag] = useState('');
+  const [ tag, setTag ] = useState('');
   const { status: searchPostStatus, data: searchPost } = useQuery(`${tag}`, {
     queryFn: getSearchData,
     enabled: !!tag,

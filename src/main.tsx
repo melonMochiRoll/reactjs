@@ -17,9 +17,9 @@ render(
   <QueryClientProvider client={queryClient}>
     <ThemeProvider theme={materialGlobalTheme}>
       <Routes>
-        <Route path="/" element={<MainPage />}/>
         <Route path="/login" element={<LogIn />}/>
         <Route path="/join" element={<Join />}/>
+        <Route path="/" element={<MainPage />}/>
         <Route path="*" element={<NotFound />}/>
       </Routes>
       <Core />

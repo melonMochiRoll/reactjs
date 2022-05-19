@@ -5,7 +5,7 @@ import { useQuery } from "react-query";
 import { toast } from "react-toastify";
 
 const useHeader = () => {
-  const { status: userStatus, data: user, error: userError, refetch: userRefetch } = useQuery({
+  const { status: userStatus, data: userData, error: userError, refetch: userRefetch } = useQuery({
     queryKey: 'MyUserData',
     queryFn: getUser,
     retry: 2,
@@ -19,7 +19,7 @@ const useHeader = () => {
     } catch(e) {}
   }, [userRefetch]);
 
-  return { userStatus, user, userError, userRefetch, onLogout };
+  return { userStatus, userData, userError, userRefetch, onLogout };
 };
 
 export default useHeader;

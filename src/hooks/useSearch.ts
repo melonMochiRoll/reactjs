@@ -1,4 +1,4 @@
-import { axiosClient } from "@Src/utils/axiosInstance";
+import { axiosClient } from "@Utils/axiosInstance";
 import { useState } from "react";
 import { useQuery } from "react-query";
 

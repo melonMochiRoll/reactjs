@@ -1,5 +1,5 @@
-import { User } from "@Src/typings/model";
-import { axiosClient } from "@Src/utils/axiosInstance"
+import { User } from "@Typings/model";
+import { axiosClient } from "@Utils/axiosInstance"
 import { useCallback } from "react";
 import { useQuery } from "react-query";
 import { toast } from "react-toastify";

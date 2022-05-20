@@ -1,14 +1,14 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import LogIn from '@Pages/LogIn/LogInContainer';
-import Join from '@Pages/Join/JoinContainer';
-import NotFound from '@Pages/NotFound';
 import { ThemeProvider } from '@mui/material/styles';
-import { materialGlobalTheme } from '@Src/styles/materialGlobalTheme';
+import { materialGlobalTheme } from '@Styles/materialGlobalTheme';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import MainPage from '@Src/pages/MainPage';
-import Core from '@Src/components/Core';
+import Core from '@Components/Core';
+import MainPage from '@Pages/MainPage';
+import LogInPage from '@Pages/LogInPage';
+import JoinPage from '@Pages/JoinPage';
+import NotFound from '@Pages/NotFound';
 
 const queryClient = new QueryClient();
 
@@ -17,10 +17,10 @@ render(
   <QueryClientProvider client={queryClient}>
     <ThemeProvider theme={materialGlobalTheme}>
       <Routes>
-        <Route path="/login" element={<LogIn />}/>
-        <Route path="/join" element={<Join />}/>
-        <Route path="/" element={<MainPage />}/>
-        <Route path="*" element={<NotFound />}/>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/login" element={<LogInPage />} />
+        <Route path="/join" element={<JoinPage />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Core />
     </ThemeProvider>

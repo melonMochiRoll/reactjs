@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { onCheckEmail, onCheckNickname, onJoin } from '@Pages/Join/JoinService';
+import { onCheckEmail, onCheckNickname, onJoin } from '@Components/join/JoinService';
 import JoinPresenter from './JoinPresenter';
 import { toast } from 'react-toastify';
-import useForm from '@Src/hooks/useForm';
+import useForm from '@Hooks/useForm';
 
 export interface JoinSubmitFormType {
   email: string;
@@ -114,14 +114,14 @@ const JoinContainer: FC = () => {
   };
 
   return (
-      <JoinPresenter
-        form={form}
-        errors={errors}
-        onChangeForm={onChangeForm}
-        onChangeError={onChangeError}
-        validation={validation}
-        onSubmit={onSubmit}
-      />
+    <JoinPresenter
+      form={form}
+      errors={errors}
+      onChangeForm={onChangeForm}
+      onChangeError={onChangeError}
+      validation={validation}
+      onSubmit={onSubmit}
+    />
   )
 };
 

@@ -1,5 +1,5 @@
-import { axiosClient } from "@Src/utils/axiosInstance"
-import { LogInFormType } from "@Src/pages/LogIn/LogInContainer";
+import { axiosClient } from "@Utils/axiosInstance"
+import { LogInFormType } from "@Components/logIn/LogInContainer";
 
 export const onLogIn = async (logInForm: LogInFormType) => {
   try {

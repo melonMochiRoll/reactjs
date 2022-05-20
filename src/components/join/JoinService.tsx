@@ -1,5 +1,5 @@
 import { axiosClient } from '@Utils/axiosInstance';
-import { JoinSubmitFormType } from '@Src/pages/Join/JoinContainer';
+import { JoinSubmitFormType } from '@Components/join/JoinContainer';
 
 export const onCheckEmail = async (
   email: string,

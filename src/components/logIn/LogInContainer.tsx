@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { onLogIn } from '@Src/pages/LogIn/LogInService';
-import { validateEmail } from '@Src/pages/Join/JoinContainer';
-import LogInPresenter from '@Src/pages/LogIn/LogInPresenter';
-import useForm from '@Src/hooks/useForm';
-import useHeader from '@Src/hooks/useHeader';
+import { onLogIn } from '@Components/logIn/LogInService';
+import { validateEmail } from '@Components/join/JoinContainer';
+import LogInPresenter from '@Components/logIn/LogInPresenter';
+import useForm from '@Hooks/useForm';
+import useHeader from '@Hooks/useHeader';
 
 export interface LogInFormType {
   email: string;

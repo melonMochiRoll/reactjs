@@ -13,7 +13,6 @@
     "allowSyntheticDefaultImports" : true,
     "baseUrl": ".",
     "paths": {
-      "@Src/*": ["src/*"],
       "@Components/*": ["src/components/*"],
       "@Hooks/*": ["src/hooks/*"],
       "@Pages/*": ["src/pages/*"],

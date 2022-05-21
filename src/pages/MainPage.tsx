@@ -1,14 +1,12 @@
 import React, { FC } from "react";
-import Header from "@Components/Header";
-import MainLayout from "@Components/MainLayout";
-import { MainBackground } from "@Styles/common";
+import PageTemplate from "@Components/PageTemplate";
+import FolderList from "@Components/folder/FolderList";
 
 const MainPage: FC = () => {
   return (
-    <MainBackground>
-      <Header />
-      <MainLayout />
-    </MainBackground>
+    <PageTemplate>
+      <FolderList />
+    </PageTemplate>
   )
 }
 

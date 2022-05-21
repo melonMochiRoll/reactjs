@@ -1,11 +1,13 @@
 import LogInContainer from "@Components/logIn/LogInContainer";
-import { MainBackground } from "@Styles/common";
+import { MainBackground, MainBox } from "@Components/PageTemplate";
 import React, { FC } from "react";
 
 const LogInPage: FC = () => {
   return (
     <MainBackground>
-      <LogInContainer />
+      <MainBox>
+        <LogInContainer />
+      </MainBox>
     </MainBackground>
   );
 }

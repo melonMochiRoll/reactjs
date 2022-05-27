@@ -9,6 +9,7 @@ import MainPage from '@Pages/MainPage';
 import LogInPage from '@Pages/LogInPage';
 import JoinPage from '@Pages/JoinPage';
 import NotFound from '@Pages/NotFound';
+import MemoPage from '@Pages/MemoPage';
 
 const queryClient = new QueryClient();
 
@@ -18,6 +19,7 @@ render(
     <ThemeProvider theme={materialGlobalTheme}>
       <Routes>
         <Route path="/" element={<MainPage />} />
+        <Route path="/memo" element={<MemoPage />} />
         <Route path="/login" element={<LogInPage />} />
         <Route path="/join" element={<JoinPage />} />
         <Route path="*" element={<NotFound />} />

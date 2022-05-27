@@ -4,7 +4,6 @@ import { Form } from "@Styles/common";
 import React, { FC } from "react";
 import { Link } from "react-router-dom";
 import { JoinFormType } from "@Components/join/JoinContainer";
-import { MainBox } from "@Components/PageTemplate";
 
 export interface JoinValidationType {
   email: (email: string) => Promise<string>,

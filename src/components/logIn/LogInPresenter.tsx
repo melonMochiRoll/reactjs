@@ -4,7 +4,6 @@ import { Form } from '@Styles/common';
 import { InputTextField } from '@Components/InputTextField';
 import { Box, Button, ButtonGroup, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { MainBox } from '@Components/PageTemplate';
 
 interface Props {
   form: LogInFormType,

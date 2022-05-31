@@ -1,6 +1,6 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import MemoListBottom from './MemoListBottom';
+import MemoBottom from './MemoBottom';
 import useMemos from '@Hooks/useMemos';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Memo } from '@Typings/model';
@@ -13,6 +13,7 @@ const MemoList: FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { userData } = useHeader();
+  const [ showDelete, setShowDelete ] = useState(false);
   const query: { folder?: string } = qs.parse(location.search, {
     ignoreQueryPrefix: true,
   });
@@ -29,18 +30,27 @@ const MemoList: FC = () => {
     memoRefetch();
   }, [userData]);
 
+  const onSwitchDelete = () => {
+    setShowDelete((prev) => !prev);
+  };
+
   return (
     <>
       <ListBox>
         {memoData?.map((memo: Memo, i: number) => {
-          return <MemoTemplate key={i} memo={memo} refetch={memoRefetch}/>
+          return <MemoTemplate
+            key={i}
+            memo={memo}
+            refetch={memoRefetch}
+            showDelete={showDelete} />
         })}
         {!memoData && memoLoading &&
           Array.from({ length: 4 }).map((_, i) => {
             return <MemoTabSkeleton key={i} />
           })}
       </ListBox>
-      <MemoListBottom />
+      <MemoBottom 
+        switchDelete={onSwitchDelete} />
     </>
   );
 }

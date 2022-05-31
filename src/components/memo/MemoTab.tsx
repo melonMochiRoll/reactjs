@@ -2,15 +2,26 @@ import React, { FC } from 'react';
 import styled from '@emotion/styled';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { Button, Collapse } from '@mui/material';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 interface Props {
   contents: string;
   publicMode: boolean;
   updatedAt: string;
   onOpen: () => void;
+  onDelete: (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => void;
+  showDelete: boolean;
 }
 
-const MemoTab: FC<Props> = ({ contents, publicMode, updatedAt, onOpen }) => {
+const MemoTab: FC<Props> = ({
+  contents,
+  publicMode,
+  updatedAt,
+  onOpen,
+  onDelete,
+  showDelete,
+  }) => {
   const date = updatedAt.split('T')[0];
   const ellipsisContents = ellipsisText(contents);
 
@@ -19,13 +30,24 @@ const MemoTab: FC<Props> = ({ contents, publicMode, updatedAt, onOpen }) => {
       <Left>
         <IconDiv>
           {publicMode ?
-            <LockOutlinedIcon color="primary"/> :
-            <LockOpenIcon color="primary"/>}
+            <LockOutlinedIcon color="primary" /> :
+            <LockOpenIcon color="primary" />}
         </IconDiv>
         {ellipsisContents}
       </Left>
       <Right>
         {date}
+        <Collapse
+          in={showDelete}
+          orientation='horizontal'>
+          <Button
+            size="small"
+            color="error"
+            variant="contained"
+            sx={{ ml: 1 }} >
+            <DeleteOutlineIcon onClick={onDelete} fontSize='small' />
+          </Button>
+        </Collapse>
       </Right>
     </TabBox>
   );

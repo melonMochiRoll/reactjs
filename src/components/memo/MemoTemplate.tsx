@@ -7,6 +7,7 @@ import { axiosClient } from '@Utils/axiosInstance';
 interface Props {
   memo: Memo;
   refetch: () => void;
+  showDelete: boolean;
 };
 
 export interface IUpdateMemo {
@@ -17,8 +18,8 @@ export interface IUpdateMemo {
   tags: string;
 }
 
-const MemoTemplate: FC<Props> = ({ memo, refetch }) => {
-  const { publicMode, contents, updatedAt } = memo;
+const MemoTemplate: FC<Props> = ({ memo, refetch, showDelete }) => {
+  const { id, publicMode, contents, updatedAt } = memo;
   const [ modal, setModal ] = useState(false);
 
   const onOpen = () => {
@@ -30,13 +31,21 @@ const MemoTemplate: FC<Props> = ({ memo, refetch }) => {
     setModal(false);
   };
 
+  const onDelete = async (e: any) => {
+    e.stopPropagation();
+    await deleteMemo(id);
+    refetch();
+  };
+
   return (
     <>
       <MemoTab
         contents={contents}
         publicMode={publicMode}
         updatedAt={updatedAt}
-        onOpen={onOpen} />
+        onOpen={onOpen}
+        onDelete={onDelete}
+        showDelete={showDelete} />
       <MemoModal
         memo={memo}
         open={modal}
@@ -68,3 +77,10 @@ const editMemo = async (
 const objectCompare = (a: Object, b: Object) => {
   return Object.values(a).join() === Object.values(b).join();
 };
+
+const deleteMemo = async (id: number) => {
+  await axiosClient({
+    method: 'DELETE',
+    url: `api/memo?id=${id}`
+  });
+}

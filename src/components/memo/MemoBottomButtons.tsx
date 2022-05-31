@@ -3,20 +3,25 @@ import styled from '@emotion/styled';
 import AddMemoIcon from '@mui/icons-material/CreateOutlined';
 import DelMemoIcon from '@mui/icons-material/DeleteOutlined';
 
-const MemoListBottom: FC = () => {
+interface Props {
+  onOpen: () => void;
+  switchDelete: () => void;
+}
+
+const MemoBottomButtons: FC<Props> = ({ onOpen, switchDelete }) => {
   return (
     <BottomBox>
-      <IconButton>
+      <IconButton onClick={onOpen}>
         <AddMemoIcon color="primary" />
       </IconButton>
-      <IconButton>
+      <IconButton onClick={switchDelete}>
         <DelMemoIcon color="primary" />
       </IconButton>
     </BottomBox>
   );
 }
 
-export default MemoListBottom;
+export default MemoBottomButtons;
 
 const BottomBox = styled.div`
   display: flex;

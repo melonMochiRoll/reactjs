@@ -7,7 +7,6 @@ import { Memo } from '@Typings/model';
 import MemoTemplate from './MemoTemplate';
 import useHeader from '@Hooks/useHeader';
 import qs from 'qs';
-import { Skeleton } from '@mui/material';
 import MemoTabSkeleton from './MemoTabSkeleton';
 
 const MemoList: FC = () => {

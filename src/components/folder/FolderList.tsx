@@ -4,7 +4,6 @@ import FolderTab from './FolderTab';
 import useMemoCount, { MemoCount } from '@Hooks/useMemoCount';
 import useHeader from '@Hooks/useHeader';
 import MemoListBottom from '@Components/memo/MemoListBottom';
-import { Skeleton } from '@mui/material';
 import FolderTabSkeleton from './FolderTabSkeleton';
 
 const FolderList: FC = () => {

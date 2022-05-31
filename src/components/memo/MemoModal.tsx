@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 import useInput from '@Hooks/useInput';
 import { Fade, Modal } from '@mui/material';
 import { Memo } from '@Typings/model';
-import { axiosClient } from '@Utils/axiosInstance';
 import React, { FC, useEffect } from 'react';
 import { IUpdateMemo } from './MemoTemplate';
 
@@ -42,7 +41,7 @@ const MemoModal: FC<Props> = ({ memo, open, onClose }) => {
 
 export default MemoModal;
 
-export const Location = styled.div`
+const Location = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
@@ -50,7 +49,7 @@ export const Location = styled.div`
   outline: 0;
 `;
 
-export const ModalBox = styled.div`
+const ModalBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -61,7 +60,7 @@ export const ModalBox = styled.div`
   background-color: #fffcf9;
 `;
 
-export const Textarea = styled.textarea`
+const Textarea = styled.textarea`
   width: 100%;
   height: 100%;
   padding: 10px;

@@ -61,7 +61,6 @@ const LogInContainer: FC = () => {
       userRefetch();
       navigate('/');
     } catch(e) {
-      console.dir(e);
       toast.error('이메일 혹은 비밀번호를 확인해 주세요');
     }
   };

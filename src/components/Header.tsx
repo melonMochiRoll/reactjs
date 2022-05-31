@@ -1,12 +1,16 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import styled from '@emotion/styled';
-import useHeader from "@Src/hooks/useHeader";
-import { Button, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
-import SearchContainer from "@Src/components/search/SearchContainer";
+import useHeader from "@Hooks/useHeader";
+import SearchContainer from "@Components/search/SearchContainer";
+import NameTag from "./Nametag";
+import { Skeleton } from "@mui/material";
 
 const Header: FC = () => {
-  const { user, onLogout } = useHeader();
+  const { userLoading, userData, userRefetch, onLogout } = useHeader();
+
+  useEffect(() => {
+    userRefetch();
+  }, [userData]);
 
   return (
     <Box>
@@ -14,28 +18,16 @@ const Header: FC = () => {
         MainLogo
         <SearchContainer />
       </Left>
-
-      {user ? (
-        <Right>
-          <Typography sx={{ mr: 2 }}>{user.nickname}님</Typography>
-          <Button
-            variant="contained"
-            size="small"
-            onClick={onLogout}>
-              로그아웃
-            </Button>
-        </Right>
-      ) : (
-        <Right>
-          <Button
-            variant="contained"
-            size="small"
-            component={Link}
-            to={'/login'}>
-              로그인
-            </Button>
-        </Right>
-      )}
+      <Right>
+        {!userLoading ?
+          <NameTag
+          nickname={userData?.nickname}
+          onLogout={onLogout} /> :
+          <Skeleton
+            variant='text'
+            width={150}
+            height={40} /> }
+      </Right>
     </Box>
   )
 }

@@ -13,4 +13,11 @@ export interface Memo {
   contents: string,
   folderName: string,
   userId: number,
+  tags: Tag[],
+}
+
+export interface Tag {
+  id: number,
+  tag: string,
+  createdAt: string,
 }

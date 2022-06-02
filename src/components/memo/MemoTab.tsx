@@ -30,8 +30,8 @@ const MemoTab: FC<Props> = ({
       <Left>
         <IconDiv>
           {publicMode ?
-            <LockOutlinedIcon color="primary" /> :
-            <LockOpenIcon color="primary" />}
+            <LockOpenIcon color="primary" /> :
+            <LockOutlinedIcon color="primary" />}
         </IconDiv>
         {ellipsisContents}
       </Left>

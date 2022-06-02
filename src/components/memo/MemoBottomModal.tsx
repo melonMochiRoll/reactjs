@@ -1,61 +1,50 @@
-import { Fade, Modal } from '@mui/material';
 import React, { FC } from 'react';
-import styled from '@emotion/styled';
 import useInput from '@Hooks/useInput';
+import { User } from '@Typings/model';
+import { ICreateMemo } from './MemoBottom';
+import useSwitch from '@Hooks/useSwitch';
+import MemoModalTemplate from './MemoModalTemplate';
 
 interface Props {
+  user: User;
+  folder: string;
   open: boolean;
-  onClose: () => void;
+  onClose: (data?: ICreateMemo) => void;
 }
 
-const MemoBottomModal: FC<Props> = ({ open, onClose }) => {
+const MemoBottomModal: FC<Props> = ({ user, folder, open, onClose }) => {
   const [ text, onChangeText ] = useInput('');
+  const [ publicMode, switchPublicMode ] = useSwitch(true);
+  const [ folderName, onChangeFolderName ] = useInput(folder);
+
+  const beforeClose = () => {
+    if (text) {
+      const matched = text.match(/#[^\s#]+/g) || [];
+      const tags = matched.join(';');
+
+      onClose({
+        author: user?.nickname,
+        contents: text,
+        publicMode,
+        folderName,
+        userId: user?.id,
+        tags,
+      });
+    }
+    onClose();
+  };
   
   return (
-    <Modal
+    <MemoModalTemplate
       open={open}
-      onClose={onClose}>
-      <Fade in={open} timeout={500}>
-      <Location>
-        <ModalBox>
-          <Textarea value={text} onChange={onChangeText} />
-        </ModalBox>
-      </Location>
-      </Fade>
-    </Modal>
+      beforeClose={beforeClose}
+      publicMode={publicMode}
+      switchPublicMode={switchPublicMode}
+      folderName={folderName}
+      onChangeFolderName={onChangeFolderName}
+      text={text}
+      onChangeText={onChangeText} />
   );
 }
 
 export default MemoBottomModal;
-
-const Location = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  outline: 0;
-`;
-
-const ModalBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 650px;
-  height: 600px;
-  padding: 1px;
-  border-radius: 6px;
-  background-color: #fffcf9;
-`;
-
-const Textarea = styled.textarea`
-  width: 100%;
-  height: 100%;
-  padding: 10px;
-  overflow: auto;
-  outline-color: #1976d2;
-  border: 3px solid #1976d2;
-  border-radius: 6px;
-  font-size: 20px;
-  font-family: 'IBM Plex Sans KR';
-  resize: none;
-`;

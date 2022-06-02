@@ -18,10 +18,9 @@ const MemoList: FC = () => {
     ignoreQueryPrefix: true,
   });
   const { memoLoading, memoData, memoRefetch } = useMemos(userData?.id, query.folder);
-  console.dir(memoData);
 
   useEffect(() => {
-    if (!query.folder || !userData) {
+    if (!userData) {
       navigate('/');
     }
   });
@@ -49,8 +48,11 @@ const MemoList: FC = () => {
             return <MemoTabSkeleton key={i} />
           })}
       </ListBox>
-      <MemoBottom 
-        switchDelete={onSwitchDelete} />
+      <MemoBottom
+        user={userData}
+        folder={query.folder}
+        switchDelete={onSwitchDelete}
+        refetch={memoRefetch} />
     </>
   );
 }

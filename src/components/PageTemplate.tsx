@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import styled from '@emotion/styled';
-import Header from './Header';
+import Header from './header/Header';
 
 interface Props {
   children: React.ReactNode;
@@ -39,4 +39,5 @@ export const MainBox = styled.div`
   padding: 10px 15px 0px 15px;
   border-radius: 6px;
   background-color: #fffcf9;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
 `;

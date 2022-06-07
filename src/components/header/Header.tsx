@@ -44,7 +44,7 @@ const Box = styled.div`
   max-width: 700px;
   padding: 8px 20px 10px 20px;
   border-radius: 6px;
-  box-shadow: 0 0 0 1px var(--saf-0), 0 4px 12px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
   background-color: #fffcf9;
 `;
 

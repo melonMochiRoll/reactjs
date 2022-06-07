@@ -9,7 +9,6 @@ export interface Memo {
   createdAt: string,
   updatedAt: string,
   publicMode: boolean,
-  author: string,
   contents: string,
   folderName: string,
   userId: number,

@@ -10,6 +10,7 @@ import LogInPage from '@Pages/LogInPage';
 import JoinPage from '@Pages/JoinPage';
 import NotFound from '@Pages/NotFound';
 import MemoPage from '@Pages/MemoPage';
+import SearchPage from '@Pages/SearchPage';
 
 const queryClient = new QueryClient();
 
@@ -20,6 +21,7 @@ render(
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/memo" element={<MemoPage />} />
+        <Route path="/search" element={<SearchPage />} />
         <Route path="/login" element={<LogInPage />} />
         <Route path="/join" element={<JoinPage />} />
         <Route path="*" element={<NotFound />} />

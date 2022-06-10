@@ -1,20 +1,27 @@
+import { Tag } from "@Typings/model";
 import { axiosClient } from "@Utils/axiosInstance";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useQuery } from "react-query";
 
 const useSearch = () => {
   const [ tag, setTag ] = useState('');
-  const { status: searchPostStatus, data: searchPost } = useQuery(`${tag}`, {
-    queryFn: getSearchData,
-    enabled: !!tag,
+  const { data, refetch } = useQuery<Tag[], Error, Tag[], string[]>({
+    queryKey: ['SearchTags', `${tag}`],
+    queryFn: getSearchTag,
+    enabled: false,
   });
 
-  return { searchPostStatus, searchPost, setTag };
+  const onSearch = useCallback((value: string) => {
+    setTag(value);
+    refetch();
+  }, [tag]);
+
+  return { data, onSearch };
 };
 
 export default useSearch;
 
-const getSearchData = async ({ queryKey }: any) => {
-  const { data } = await axiosClient({ url: `api/memo?tag=${queryKey}` });
+const getSearchTag = async ({ queryKey }: { queryKey: string[] }): Promise<Tag[]> => {
+  const { data } = await axiosClient({ url: `api/tag?keyword=${queryKey[1]}` });
   return data;
 }

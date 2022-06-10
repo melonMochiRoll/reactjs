@@ -59,7 +59,7 @@ const MemoModalTemplate: FC<Props> = ({
 
 export default MemoModalTemplate;
 
-const Location = styled.div`
+export const Location = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
@@ -67,7 +67,7 @@ const Location = styled.div`
   outline: 0;
 `;
 
-const ModalBox = styled.div`
+export const ModalBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -76,7 +76,7 @@ const ModalBox = styled.div`
   padding: 1px;
   border: 3px solid #1976d2;
   border-radius: 6px;
-  background-color: #fffcf9;
+  background-color: #FFFFFF;
 `;
 
 const SettingBox = styled.div`
@@ -97,7 +97,7 @@ const InputBox = styled.div`
   align-items: center;
 `;
 
-const Textarea = styled.textarea`
+export const Textarea = styled.textarea`
   width: 100%;
   height: 100%;
   padding: 10px;
@@ -106,4 +106,5 @@ const Textarea = styled.textarea`
   font-size: 20px;
   font-family: 'IBM Plex Sans KR';
   resize: none;
+  border: 0;
 `;

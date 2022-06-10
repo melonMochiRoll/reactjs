@@ -16,18 +16,19 @@ const MemoBottomModal: FC<Props> = ({ user, folder, open, onClose }) => {
   const [ text, onChangeText ] = useInput('');
   const [ publicMode, switchPublicMode ] = useSwitch(true);
   const [ folderName, onChangeFolderName ] = useInput(folder);
+  const { id } = user;
 
   const beforeClose = () => {
     if (text) {
       const matched = text.match(/#[^\s#]+/g) || [];
-      const tags = matched.join(';');
+      const replaced = matched.map((ele: string) => ele.replace(/#/g, ''));
+      const tags = replaced.join(';');
 
       onClose({
-        author: user?.nickname,
         contents: text,
         publicMode,
         folderName,
-        userId: user?.id,
+        userId: id,
         tags,
       });
     }

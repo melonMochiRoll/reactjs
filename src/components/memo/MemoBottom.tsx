@@ -12,7 +12,6 @@ interface Props {
 }
 
 export interface ICreateMemo {
-  author: string,
   contents: string,
   publicMode: boolean,
   folderName: string,

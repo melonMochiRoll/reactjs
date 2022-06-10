@@ -4,24 +4,22 @@ import LockOpenIcon from '@mui/icons-material/LockOpen';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Button, Collapse } from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { Memo } from '@Typings/model';
 
 interface Props {
-  contents: string;
-  publicMode: boolean;
-  updatedAt: string;
+  memo: Memo;
   onOpen: () => void;
   onDelete: (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => void;
   showDelete: boolean;
 }
 
 const MemoTab: FC<Props> = ({
-  contents,
-  publicMode,
-  updatedAt,
+  memo,
   onOpen,
   onDelete,
   showDelete,
   }) => {
+  const { publicMode, updatedAt, contents } = memo;
   const date = updatedAt.split('T')[0];
   const ellipsisContents = ellipsisText(contents);
 
@@ -55,10 +53,14 @@ const MemoTab: FC<Props> = ({
 
 export default MemoTab;
 
-const ellipsisText = (str: string) => {
+export const ellipsisText = (str: string) => {
   let temp = str;
 
-  if (str.length > 15) {
+  if (!temp) {
+    return;
+  }
+
+  if (temp.length > 15) {
     temp = temp.slice(0, 15) + '...';
     return temp;
   }

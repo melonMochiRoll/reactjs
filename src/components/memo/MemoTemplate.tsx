@@ -7,7 +7,7 @@ import { axiosClient } from '@Utils/axiosInstance';
 interface Props {
   memo: Memo;
   refetch: () => void;
-  showDelete: boolean;
+  showDelete?: boolean;
 };
 
 export interface IUpdateMemo {
@@ -19,8 +19,8 @@ export interface IUpdateMemo {
 }
 
 const MemoTemplate: FC<Props> = ({ memo, refetch, showDelete }) => {
-  const { id, publicMode, contents, updatedAt } = memo;
   const [ modal, setModal ] = useState(false);
+  const { id } = memo;
 
   const onOpen = () => {
     setModal(true);
@@ -40,9 +40,7 @@ const MemoTemplate: FC<Props> = ({ memo, refetch, showDelete }) => {
   return (
     <>
       <MemoTab
-        contents={contents}
-        publicMode={publicMode}
-        updatedAt={updatedAt}
+        memo={memo}
         onOpen={onOpen}
         onDelete={onDelete}
         showDelete={showDelete} />

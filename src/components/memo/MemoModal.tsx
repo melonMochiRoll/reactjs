@@ -12,7 +12,7 @@ interface Props {
 }
 
 const MemoModal: FC<Props> = ({ memo, open, onClose }) => {
-  const { id, contents, publicMode, folderName, tags } = memo;
+  const { id, contents, publicMode, folderName } = memo;
   const [ text, onChangeText, setText ] = useInput(contents);
   const [ editpublicMode, switchEditPublicMode ] = useSwitch(publicMode);
   const [ editfolderName, onChangeEditFolderName ] = useInput(folderName);
@@ -23,7 +23,8 @@ const MemoModal: FC<Props> = ({ memo, open, onClose }) => {
 
   const beforeClose = () => {
     const matched = text.match(/#[^\s#]+/g) || [];
-    const tags = matched.join(';');
+    const replaced = matched.map((ele: string) => ele.replace(/#/g, ''));
+    const tags = replaced.join(';');
 
     onClose({
       memoId: id,

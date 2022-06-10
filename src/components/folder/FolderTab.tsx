@@ -7,9 +7,12 @@ import { Link } from 'react-router-dom';
 interface Props {
   folderName: string;
   folderCount: number;
-};
+}
 
-const FolderTab: FC<Props> = ({ folderName, folderCount }) => {
+const FolderTab: FC<Props> = ({
+  folderName,
+  folderCount,
+  }) => {
   return (
     <Link to={`/memo?folder=${folderName}`}>
       <TabBox>

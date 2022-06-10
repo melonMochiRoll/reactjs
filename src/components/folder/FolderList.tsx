@@ -1,31 +1,35 @@
 import React, { FC, useEffect } from 'react';
 import styled from '@emotion/styled';
 import FolderTab from './FolderTab';
-import useMemoCount, { MemoCount } from '@Hooks/useMemoCount';
+import useMemoCount, { MemoCount } from './hooks/useMemoCount';
 import useHeader from '@Hooks/useHeader';
 import FolderTabSkeleton from './FolderTabSkeleton';
 
-const FolderList: FC = () => {
+interface Props {}
+
+const FolderList: FC<Props> = () => {
   const { userData } = useHeader();
-  const { memoCountloading, memoCount, memoCountRefetch } = useMemoCount(userData?.id);
+  const { loading, data, refetch } = useMemoCount(userData?.id);
 
   useEffect(() => {
-    memoCountRefetch();
+    refetch();
   }, [userData]);
   
   return (
     <>
       <ListBox>
-        {memoCount?.map((ele: MemoCount, i: number) => {
+        {data?.map((ele: MemoCount, i: number) => {
           return <FolderTab
             key={i}
             folderName={ele.folderName}
             folderCount={ele.count} />
-        })}
-        {!memoCount && memoCountloading && 
+          })
+        }
+        {!data && loading && 
           Array.from({ length: 3 }).map((_, i) => {
             return <FolderTabSkeleton key={i} />
-          })}
+          })
+        }
       </ListBox>
     </>
   );
@@ -38,6 +42,7 @@ const ListBox = styled.div`
   width: 100%;
   flex-direction: column;
   flex-wrap: wrap;
+  overflow: auto;
 
   a {
     color: inherit;

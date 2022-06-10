@@ -3,7 +3,7 @@ import useInput from '@Hooks/useInput';
 import { User } from '@Typings/model';
 import { ICreateMemo } from './MemoBottom';
 import useSwitch from '@Hooks/useSwitch';
-import MemoModalTemplate from './MemoModalTemplate';
+import MemoModalTemplate from '../MemoModalTemplate';
 
 interface Props {
   user: User;

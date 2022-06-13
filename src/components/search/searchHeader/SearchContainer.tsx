@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import styled from '@emotion/styled';
 import SearchInput from "@Components/search/searchHeader/SearchInput";
 import SearchResult from "@Components/search/searchHeader/SearchResult";
-import useSearch from "@Hooks/useSearch";
+import useSearch from "@Components/search/searchHeader/hooks/useSearch";
 import useInput from "@Hooks/useInput";
 
 const SearchContainer: FC = () => {

@@ -1,7 +1,7 @@
 import React, { FC, useEffect } from "react";
 import styled from '@emotion/styled';
 import useHeader from "@Hooks/useHeader";
-import SearchContainer from "@Components/search/SearchContainer";
+import SearchContainer from "@Components/search/searchHeader/SearchContainer";
 import NameTag from "./Nametag";
 import { Skeleton } from "@mui/material";
 

@@ -5,7 +5,7 @@ import { useQuery } from "react-query";
 
 const useSearch = () => {
   const [ tag, setTag ] = useState('');
-  const { data, refetch } = useQuery<Tag[], Error, Tag[], string[]>({
+  const { isFetching: loading, data, refetch } = useQuery<Tag[], Error, Tag[], string[]>({
     queryKey: ['SearchTags', `${tag}`],
     queryFn: getSearchTag,
     enabled: false,
@@ -16,7 +16,7 @@ const useSearch = () => {
     refetch();
   }, [tag]);
 
-  return { data, onSearch };
+  return { loading, data, onSearch };
 };
 
 export default useSearch;

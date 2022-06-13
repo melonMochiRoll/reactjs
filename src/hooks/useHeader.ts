@@ -5,10 +5,10 @@ import { useQuery } from "react-query";
 import { toast } from "react-toastify";
 
 const useHeader = () => {
-  const { status: userStatus, data: userData, error: userError, refetch: userRefetch } = useQuery({
+  const { isFetching: userLoading, data: userData, refetch: userRefetch } = useQuery<User, Error, User, string>({
     queryKey: 'MyUserData',
     queryFn: getUser,
-    retry: 2,
+    enabled: false,
   });
 
   const onLogout = useCallback(async () => {
@@ -19,7 +19,7 @@ const useHeader = () => {
     } catch(e) {}
   }, [userRefetch]);
 
-  return { userStatus, userData, userError, userRefetch, onLogout };
+  return { userLoading, userData, userRefetch, onLogout };
 };
 
 export default useHeader;

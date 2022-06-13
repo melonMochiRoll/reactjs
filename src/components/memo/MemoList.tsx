@@ -1,13 +1,13 @@
 import React, { FC, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import MemoBottom from './MemoBottom';
-import useMemos from '@Hooks/useMemos';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Memo } from '@Typings/model';
 import MemoTemplate from './MemoTemplate';
 import useHeader from '@Hooks/useHeader';
 import qs from 'qs';
 import MemoTabSkeleton from './MemoTabSkeleton';
+import MemoBottom from './bottom/MemoBottom';
+import useMemos from './hooks/useMemos';
 
 const MemoList: FC = () => {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ const MemoList: FC = () => {
   const query: { folder?: string } = qs.parse(location.search, {
     ignoreQueryPrefix: true,
   });
-  const { memoLoading, memoData, memoRefetch } = useMemos(userData?.id, query.folder);
+  const { loading, data, refetch } = useMemos(userData?.id, query.folder);
 
   useEffect(() => {
     if (!userData) {
@@ -26,7 +26,7 @@ const MemoList: FC = () => {
   });
 
   useEffect(() => {
-    memoRefetch();
+    refetch();
   }, [userData]);
 
   const onSwitchDelete = () => {
@@ -36,14 +36,14 @@ const MemoList: FC = () => {
   return (
     <>
       <ListBox>
-        {memoData?.map((memo: Memo, i: number) => {
+        {data?.map((memo: Memo, i: number) => {
           return <MemoTemplate
             key={i}
             memo={memo}
-            refetch={memoRefetch}
+            refetch={refetch}
             showDelete={showDelete} />
         })}
-        {!memoData && memoLoading &&
+        {!data && loading &&
           Array.from({ length: 4 }).map((_, i) => {
             return <MemoTabSkeleton key={i} />
           })}
@@ -52,7 +52,7 @@ const MemoList: FC = () => {
         user={userData}
         folder={query.folder}
         switchDelete={onSwitchDelete}
-        refetch={memoRefetch} />
+        refetch={refetch} />
     </>
   );
 }
@@ -63,10 +63,5 @@ const ListBox = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;
-  flex-wrap: wrap;
-
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
+  overflow: auto;
 `;

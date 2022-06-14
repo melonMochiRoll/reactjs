@@ -13,7 +13,7 @@ interface Props {
 }
 
 const MemoBottomModal: FC<Props> = ({ user, folder, open, onClose }) => {
-  const [ text, onChangeText ] = useInput('');
+  const [ text, onChangeText, setText ] = useInput('');
   const [ publicMode, switchPublicMode ] = useSwitch(true);
   const [ folderName, onChangeFolderName ] = useInput(folder);
   const { id } = user;
@@ -31,7 +31,10 @@ const MemoBottomModal: FC<Props> = ({ user, folder, open, onClose }) => {
         userId: id,
         tags,
       });
+      setText('');
+      return;
     }
+    setText('');
     onClose();
   };
   

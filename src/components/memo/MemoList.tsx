@@ -46,7 +46,7 @@ const MemoList: FC = () => {
         {!data && loading &&
           Array.from({ length: 4 }).map((_, i) => {
             return <MemoTabSkeleton key={i} />
-          })}
+        })}
       </ListBox>
       <MemoBottom
         user={userData}

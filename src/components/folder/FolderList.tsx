@@ -28,8 +28,7 @@ const FolderList: FC<Props> = () => {
         {!data && loading && 
           Array.from({ length: 3 }).map((_, i) => {
             return <FolderTabSkeleton key={i} />
-          })
-        }
+        })}
       </ListBox>
     </>
   );
@@ -41,7 +40,6 @@ const ListBox = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;
-  flex-wrap: wrap;
   overflow: auto;
 
   a {

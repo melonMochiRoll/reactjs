@@ -29,7 +29,7 @@ const SearchResultPage: FC = () => {
       {!data && loading &&
         Array.from({ length: 4 }).map((_, i) => {
           return <MemoTabSkeleton key={i} />
-        })}
+      })}
     </ListBox>
   );
 }
@@ -40,5 +40,5 @@ const ListBox = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;
-  flex-wrap: wrap;
+  overflow: auto;
 `;

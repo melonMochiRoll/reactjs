@@ -71,7 +71,6 @@ export const ellipsisText = (str: string) => {
 export const TabBox = styled.div`
   display: flex;
   width: 100%;
-  overflow: auto;
   justify-content: space-between;
   padding: 10px 5px;
   border-bottom: solid 1px black;

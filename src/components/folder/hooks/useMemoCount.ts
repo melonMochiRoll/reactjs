@@ -4,10 +4,16 @@ import { useQuery } from "react-query";
 export interface MemoCount {
   folderName: string,
   count: number,
-}
+};
+
+type useMemoCountQueryKey = [string, number];
+
+interface useMemoCountContext {
+  queryKey: useMemoCountQueryKey;
+};
 
 const useMemoCount = (userId: number) => {
-  const { isFetching: loading, data, refetch } = useQuery<MemoCount[], Error, MemoCount[], [string, number]>({
+  const { isFetching: loading, data, refetch } = useQuery<MemoCount[], Error, MemoCount[], useMemoCountQueryKey>({
     queryKey: ['MyMemoCount', userId],
     queryFn: getMemoCount,
     enabled: false,
@@ -19,7 +25,7 @@ const useMemoCount = (userId: number) => {
 
 export default useMemoCount;
 
-const getMemoCount = async ({ queryKey }: { queryKey: [string, number] } ) => {
+const getMemoCount = async ({ queryKey }: useMemoCountContext ) => {
   const { data } = await axiosClient({ url: `api/memo/count?id=${queryKey[1] | 0}`});
   return data;
 };

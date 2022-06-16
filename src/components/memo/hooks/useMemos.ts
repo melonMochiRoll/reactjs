@@ -1,21 +1,28 @@
-import { Memo } from "@Typings/model";
+import { Memo, MemoWithHasMore } from "@Typings/model";
 import { axiosClient } from "@Utils/axiosInstance";
 import { useQuery } from "react-query";
 
-const useMemos = ( userId: number, folderName: string ) => {
-  const { isFetching: loading, data, refetch } = useQuery<Memo[], Error, Memo[], [string, number, string]>({
-    queryKey: ['MyMemoData', userId, folderName],
+type useMemosQueryKey = [string, number, string, number];
+
+interface useMemosContext {
+  queryKey: useMemosQueryKey;
+}
+
+const useMemos = ( userId: number, folderName: string, currentNumber: number ) => {
+  const { isFetched, isFetching: loading, data, refetch } = useQuery<MemoWithHasMore, Error, MemoWithHasMore, useMemosQueryKey>({
+    queryKey: ['MyMemoData', userId, folderName, currentNumber],
     queryFn: getMemos,
-    enabled: false,
+    refetchOnWindowFocus: false,
+    keepPreviousData: true,
     retry: false,
   });
 
-  return { loading, data, refetch };
+  return { isFetched, loading, data, refetch };
 };
 
 export default useMemos;
 
-const getMemos = async ({ queryKey }: { queryKey: [string, number, string] }): Promise<Memo[]> => {
-  const { data } = await axiosClient({ url: `api/memo?id=${queryKey[1] | 0}&fn=${queryKey[2]}` });
+const getMemos = async ({ queryKey }: useMemosContext): Promise<MemoWithHasMore> => {
+  const { data } = await axiosClient({ url: `api/memo?id=${queryKey[1] | 0}&fn=${queryKey[2]}&cn=${queryKey[3]}` });
   return data;
 };

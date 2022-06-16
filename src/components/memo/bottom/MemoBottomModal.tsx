@@ -4,19 +4,19 @@ import { User } from '@Typings/model';
 import { ICreateMemo } from './MemoBottom';
 import useSwitch from '@Hooks/useSwitch';
 import MemoModalTemplate from '../MemoModalTemplate';
+import useHeader from '@Hooks/useHeader';
 
 interface Props {
-  user: User;
   folder: string;
   open: boolean;
   onClose: (data?: ICreateMemo) => void;
 }
 
-const MemoBottomModal: FC<Props> = ({ user, folder, open, onClose }) => {
+const MemoBottomModal: FC<Props> = ({ folder, open, onClose }) => {
+  const { userData } = useHeader();
   const [ text, onChangeText, setText ] = useInput('');
   const [ publicMode, switchPublicMode ] = useSwitch(true);
   const [ folderName, onChangeFolderName ] = useInput(folder);
-  const { id } = user;
 
   const beforeClose = () => {
     if (text) {
@@ -28,7 +28,7 @@ const MemoBottomModal: FC<Props> = ({ user, folder, open, onClose }) => {
         contents: text,
         publicMode,
         folderName,
-        userId: id,
+        userId: userData?.id,
         tags,
       });
       setText('');

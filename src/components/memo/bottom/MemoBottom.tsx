@@ -5,7 +5,6 @@ import MemoBottomButtons from './MemoBottomButtons';
 import MemoBottomModal from './MemoBottomModal';
 
 interface Props {
-  user: User;
   folder: string;
   switchDelete: () => void;
   refetch: () => void;
@@ -19,7 +18,11 @@ export interface ICreateMemo {
   tags: string,
 }
 
-const MemoBottom: FC<Props> = ({ user, folder, switchDelete, refetch }) => {
+const MemoBottom: FC<Props> = ({
+  folder,
+  switchDelete,
+  refetch,
+}) => {
   const [ modal, setModal ] = useState(false);
 
   const onOpen = () => {
@@ -37,7 +40,6 @@ const MemoBottom: FC<Props> = ({ user, folder, switchDelete, refetch }) => {
         onOpen={onOpen}
         switchDelete={switchDelete} />
       <MemoBottomModal
-        user={user}
         folder={folder}
         open={modal}
         onClose={onClose} />

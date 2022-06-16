@@ -6,7 +6,7 @@ type useMemosQueryKey = [string, number, string, number];
 
 interface useMemosContext {
   queryKey: useMemosQueryKey;
-}
+};
 
 const useMemos = ( userId: number, folderName: string, currentNumber: number ) => {
   const { isFetched, isFetching: loading, data, refetch } = useQuery<MemoWithHasMore, Error, MemoWithHasMore, useMemosQueryKey>({
@@ -23,6 +23,6 @@ const useMemos = ( userId: number, folderName: string, currentNumber: number ) =
 export default useMemos;
 
 const getMemos = async ({ queryKey }: useMemosContext): Promise<MemoWithHasMore> => {
-  const { data } = await axiosClient({ url: `api/memo?id=${queryKey[1] | 0}&fn=${queryKey[2]}&cn=${queryKey[3]}` });
+  const { data } = await axiosClient({ url: `api/memo?id=${queryKey[1] | 0}&fn=${queryKey[2]}&cs=${queryKey[3]}` });
   return data;
 };
